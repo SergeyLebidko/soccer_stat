@@ -10,22 +10,12 @@ const navigationData = [
     },
     {
         href: '/competition_list',
-        title: 'Список лиг',
+        title: 'Лиги',
         exact: false
     },
     {
         href: '/team_list',
-        title: 'Список команд',
-        exact: false
-    },
-    {
-        href: '/competition_calendar',
-        title: 'Календарь лиги',
-        exact: false
-    },
-    {
-        href: '/team_calendar',
-        title: 'Календарь команды',
+        title: 'Команды',
         exact: false
     },
 ];
@@ -37,7 +27,7 @@ function Navigation() {
                 {navigationData.map(
                     item =>
                         <li key={item.href}>
-                            <NavLink exact={item.exact} to={item.href} activeClassName={style.selected}>
+                            <NavLink exact={item.exact} to={item.href} activeClassName={style.selected_link}>
                                 {item.title}
                             </NavLink>
                         </li>

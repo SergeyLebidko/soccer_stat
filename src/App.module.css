@@ -2,6 +2,7 @@
 
 .container {
     margin-top: 1em;
+    padding: 1em;
 }
 
 .container > * + * {
@@ -10,13 +11,16 @@
 
 .site_title {
     text-align: center;
-    border-bottom: 1px dashed lightgray;
-    font-size: 2rem;
-    padding: 1rem;
+    font-size: 1.5em;
 }
 
 @media (min-width: 48em) {
+    .site_title {
+        font-size: 2em;
+    }
+
     .container {
+        padding: 0;
         max-width: 76em;
         margin-left: auto;
         margin-right: auto;

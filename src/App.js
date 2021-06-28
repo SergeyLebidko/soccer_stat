@@ -8,7 +8,6 @@ import CompetitionCalendar from './CompetitionCalendar/CompetitionCalendar';
 import TeamCalendar from './TeamCalendar/TeamCalendar';
 import style from './App.module.css';
 
-
 function App() {
     return (
         <div className={style.container}>
