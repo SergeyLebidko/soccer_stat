@@ -1,10 +1,31 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import {loadCompetitions} from '../utils';
 import style from './Competitions.module.css';
 
 function Competitions() {
+    let [competitions, setCompetitions] = useState(null);
+
+    // При монтировании компонента сразу же загружаем список лиг
+    useEffect(async () => {
+        let {competitions} = await loadCompetitions();
+        setCompetitions(competitions);
+    }, []);
+
     return (
         <div>
-            Здесь будет список лиг
+            {competitions ?
+                <ul>
+                    {competitions.map(
+                        competition =>
+                            <li key={competition.id}>
+                                <Link to={`/teams/?competition=${competition.id}`}>{competition.name}</Link>
+                            </li>
+                    )}
+                </ul>
+                :
+                ''
+            }
         </div>
     )
 }

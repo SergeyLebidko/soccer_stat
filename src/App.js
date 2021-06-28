@@ -1,6 +1,7 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import Competitions from './Competitions/Competitions';
+import Teams from './Teams/Teams';
 import style from './App.module.css';
 
 
@@ -13,6 +14,7 @@ function App() {
                     <Redirect to="/competitions"/>
                 </Route>
                 <Route path="/competitions" component={Competitions}/>
+                <Route path="/teams" component={Teams}/>
             </Switch>
         </div>
     );
