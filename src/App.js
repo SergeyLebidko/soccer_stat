@@ -1,11 +1,14 @@
 import React from 'react';
-import {HashRouter, Switch, Route} from "react-router-dom";
+import {Switch, Route} from 'react-router-dom';
+import Navigation from './Navigation/Navigation';
 import MainPage from './MainPage/MainPage';
 import './App.css';
 
 function App() {
     return (
-        <HashRouter>
+        <>
+            <h1>Soccer Stat</h1>
+            <Navigation/>
             <Switch>
                 <Route exact path="/" component={MainPage}/>
                 <Route path="/competition_list" component={Cap}/>
@@ -13,7 +16,7 @@ function App() {
                 <Route path="/competition_calendar" component={Cap}/>
                 <Route path="/team_calendar" component={Cap}/>
             </Switch>
-        </HashRouter>
+        </>
     );
 }
 
