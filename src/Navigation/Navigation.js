@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import style from './Navigation.module.css';
 
 const navigationData = [
@@ -11,13 +11,13 @@ const navigationData = [
     {
         href: '/competition_list',
         title: 'Лиги',
-        exact: false
+        exact: true
     },
     {
         href: '/team_list',
         title: 'Команды',
-        exact: false
-    },
+        exact: true
+    }
 ];
 
 function Navigation() {
@@ -27,9 +27,9 @@ function Navigation() {
                 {navigationData.map(
                     item =>
                         <li key={item.href}>
-                            <NavLink exact={item.exact} to={item.href} activeClassName={style.selected_link}>
+                            <Link exact={item.exact} to={item.href}>
                                 {item.title}
-                            </NavLink>
+                            </Link>
                         </li>
                 )}
             </ul>
