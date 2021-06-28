@@ -4,7 +4,7 @@ import style from './TeamList.module.css';
 function TeamList(){
     return (
         <div>
-            Здесь будем список команд
+            Здесь будет список команд
         </div>
     );
 }

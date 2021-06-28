@@ -1,6 +1,5 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
-import Navigation from './Navigation/Navigation';
 import MainPage from './MainPage/MainPage';
 import CompetitionList from './CompetitionList/CompetitionList';
 import TeamList from './TeamList/TeamList';
@@ -12,7 +11,6 @@ function App() {
     return (
         <div className={style.container}>
             <h1 className={style.site_title}>Soccer Stat</h1>
-            <Navigation/>
             <Switch>
                 <Route exact path="/" component={MainPage}/>
                 <Route path="/competition_list" component={CompetitionList}/>
