@@ -10,8 +10,8 @@
 .site_title {
     font-family: 'Big Shoulders Display', Arial, serif;
     text-align: center;
-    font-size: calc(1em + 2vw);
-    border-bottom: 1px dashed lightgray;
+    font-size: 3.5em;
+    border-bottom: 1px dashed gray;
 }
 
 @media (min-width: 48em) {
