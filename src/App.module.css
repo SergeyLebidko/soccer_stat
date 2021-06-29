@@ -1,6 +1,6 @@
 .container {
     margin-top: 1em;
-    padding: 1em;
+    padding: 0.5em;
 }
 
 .container > * + * {
@@ -9,16 +9,11 @@
 
 .site_title {
     text-align: center;
-    font-size: 1.5em;
+    font-size: calc(1em + 2vw);
 }
 
 @media (min-width: 48em) {
-    .site_title {
-        font-size: 2em;
-    }
-
     .container {
-        padding: 0;
         max-width: 76em;
         margin-left: auto;
         margin-right: auto;
