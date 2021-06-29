@@ -24,15 +24,22 @@ function Competitions() {
     let content = <Preloader/>;
     if (competitions) {
         content = (
-            <ul>
+            <div className={style.card_container}>
                 {competitions.map(
                     competition =>
-                        <li key={competition.id}>
-                            <Link to={`/teams/?competition=${competition.id}`}>{competition.name}</Link>
-                            <Link to={`/competition_calendar/?competition=${competition.id}`}>Календарь лиги</Link>
-                        </li>
+                        <div key={competition.id} className={style.card}>
+                            <Link to={`/competition_calendar/?competition=${competition.id}`}>
+                                <img
+                                    src={competition.emblemUrl || competition.area.ensignUrl}
+                                    className={style.emblem}
+                                />
+                            </Link>
+                            <h1 className={style.competition_title}>{competition.name}</h1>
+                            <h3 className={style.country_title}>{competition.area.name}</h3>
+                            <Link to={`/teams/?competition=${competition.id}`}>Команды</Link>
+                        </div>
                 )}
-            </ul>
+            </div>
         );
     }
     if (error) {
