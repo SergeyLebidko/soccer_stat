@@ -1,9 +1,9 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import Competitions from './Competitions/Competitions';
+import CompetitionCalendar from './CompetitionCalendar/CompetitionCalendar';
 import Teams from './Teams/Teams';
 import style from './App.module.css';
-
 
 function App() {
     return (
@@ -15,6 +15,7 @@ function App() {
                 </Route>
                 <Route path="/competitions" component={Competitions}/>
                 <Route path="/teams" component={Teams}/>
+                <Route path="/competition_calendar" component={CompetitionCalendar}/>
             </Switch>
         </div>
     );

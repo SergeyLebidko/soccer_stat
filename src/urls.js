@@ -14,3 +14,6 @@ export function getTeamsUrl(competition) {
     return `${PROTOCOL}://${HOST}/${API_VERSION}/competitions/${competition}/teams`;
 }
 
+export function getCompetitionCalendarUrl(competition) {
+    return `${PROTOCOL}://${HOST}/${API_VERSION}/competitions/${competition}/matches`;
+}

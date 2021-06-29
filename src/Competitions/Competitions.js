@@ -20,6 +20,7 @@ function Competitions() {
                         competition =>
                             <li key={competition.id}>
                                 <Link to={`/teams/?competition=${competition.id}`}>{competition.name}</Link>
+                                <Link to={`/competition_calendar/?competition=${competition.id}`}>Календарь лиги</Link>
                             </li>
                     )}
                 </ul>

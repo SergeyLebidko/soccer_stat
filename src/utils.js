@@ -23,3 +23,9 @@ export async function loadTeams(competition) {
     let {count, teams} = await loadData(url, 'Не удалось загрузить список команд лиги')
     return {count, teams};
 }
+
+export async function loadCompetitionCalendar(competition) {
+    let url = U.getCompetitionCalendarUrl(competition);
+    let {count, matches} = await loadData(url, 'Не удалось загрузить календарь лиги');
+    return {count, matches};
+}
