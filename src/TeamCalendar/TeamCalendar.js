@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import {loadCompetitionCalendar} from '../utils';
-import style from './CompetitionCalendar.module.css';
+import {withRouter} from 'react-router-dom';
+import {loadTeamCalendar} from '../utils';
+import style from './TeamCalendar.module.css';
 
-function CompetitionCalendar({location}) {
+function TeamCalendar({location}) {
     let [matches, setMatches] = useState(null);
 
     let params = new URLSearchParams(location.search);
-    let competition = params.get('competition');
+    let team = params.get('team');
 
     useEffect(async () => {
-        let {count, matches} = await loadCompetitionCalendar(competition);
+        let {count, matches} = await loadTeamCalendar(team);
         setMatches(matches);
-    }, [])
+    }, []);
 
     return (
         <div>
@@ -24,12 +24,8 @@ function CompetitionCalendar({location}) {
                                 <span>Дата проведения: {match.utcDate}</span>
                                 <span>Статус: {match.status}</span>
                                 <span>Этап: {match.stage}</span>
-                                <Link to={`/team_calendar/?team=${match.awayTeam.id}`}>
-                                    Гости: {match.awayTeam.name}
-                                </Link>
-                                <Link to={`/team_calendar/?team=${match.homeTeam.id}`}>
-                                    Хозяева: {match.homeTeam.name}
-                                </Link>
+                                <span>Гости: {match.awayTeam.name}</span>
+                                <span>Хозяева: {match.homeTeam.name}</span>
                             </li>
                     )}
                 </ul>
@@ -37,7 +33,7 @@ function CompetitionCalendar({location}) {
                 ''
             }
         </div>
-    )
+    );
 }
 
-export default CompetitionCalendar;
+export default withRouter(TeamCalendar);

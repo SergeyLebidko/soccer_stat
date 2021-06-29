@@ -5,15 +5,21 @@ const API_VERSION = 'v2';
 const PLAN = 'TIER_ONE';
 const AREAS = '2077';
 
+const BASE = `${PROTOCOL}://${HOST}/${API_VERSION}`;
+
 // При формировании адреса для запроса лиг учитываем, что будем работать только с европейскими лигами с использованием бесплатного api
 export function getCompetitionsUrl() {
-    return `${PROTOCOL}://${HOST}/${API_VERSION}/competitions/?areas=${AREAS}&plan=${PLAN}`;
+    return `${BASE}/competitions/?areas=${AREAS}&plan=${PLAN}`;
 }
 
 export function getTeamsUrl(competition) {
-    return `${PROTOCOL}://${HOST}/${API_VERSION}/competitions/${competition}/teams`;
+    return `${BASE}/competitions/${competition}/teams`;
 }
 
 export function getCompetitionCalendarUrl(competition) {
-    return `${PROTOCOL}://${HOST}/${API_VERSION}/competitions/${competition}/matches`;
+    return `${BASE}/competitions/${competition}/matches`;
+}
+
+export function getTeamCalendar(team) {
+    return `${BASE}/teams/${team}/matches`;
 }

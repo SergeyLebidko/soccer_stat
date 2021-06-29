@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import {loadTeams} from '../utils';
 import style from './Teams.module.css';
 
@@ -18,7 +19,12 @@ function Teams({location}) {
             {teams ?
                 <ul>
                     {teams.map(
-                        team => <li key={team.id}>{team.name}</li>
+                        team =>
+                            <li key={team.id}>
+                                <Link to={`/team_calendar/?team=${team.id}`}>
+                                    {team.name}
+                                </Link>
+                            </li>
                     )}
                 </ul>
                 :
