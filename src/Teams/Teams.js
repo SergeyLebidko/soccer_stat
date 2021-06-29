@@ -10,7 +10,7 @@ function Teams({location}) {
     let competition = params.get('competition');
 
     useEffect(async () => {
-        let {teams} = await loadTeams(competition);
+        let {count, teams} = await loadTeams(competition);
         setTeams(teams);
     }, []);
 
@@ -31,7 +31,7 @@ function Teams({location}) {
                 ''
             }
         </div>
-    )
+    );
 }
 
 export default Teams;
