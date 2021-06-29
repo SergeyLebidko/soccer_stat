@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {loadCompetitions} from '../utils';
 import Preloader from '../Preloader/Preloader';
+import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import style from './Competitions.module.css';
 
 function Competitions() {
@@ -15,7 +16,7 @@ function Competitions() {
                 let {competitions} = await loadCompetitions();
                 setCompetitions(competitions);
             } catch (err) {
-                setError(err);
+                setError(err.message);
             }
         })();
     }, []);
@@ -35,7 +36,7 @@ function Competitions() {
         );
     }
     if (error) {
-
+        content = <ErrorDisplay text={error}/>
     }
 
     return <div>{content}</div>;

@@ -10,9 +10,9 @@ function Preloader() {
         let timer = setInterval(() => {
             counter++;
             setDotCount(counter % 5 + 1);
-        }, 300);
+        }, 500);
         return () => clearInterval(timer);
-    });
+    }, []);
 
     return (
         <div className={style.container}>

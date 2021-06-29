@@ -2,14 +2,18 @@ import {API_TOKEN} from './settings';
 import * as U from './urls';
 
 async function loadData(url, errorMessage) {
-    let response = await fetch(url, {
-        headers: {
-            'X-Auth-Token': API_TOKEN
-        }
-    });
+    let response;
+    try {
+        response = await fetch(url, {
+            headers: {
+                'X-Auth-Token': API_TOKEN
+            }
+        });
+    } catch (err) {
+        throw new Error(`${errorMessage} (${err.toString()})`);
+    }
     if (!response.ok) throw new Error(errorMessage);
-    let json = await response.json();
-    return json;
+    return await response.json();
 }
 
 export async function loadCompetitions() {
