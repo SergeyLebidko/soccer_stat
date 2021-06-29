@@ -7,9 +7,11 @@ function Competitions() {
     let [competitions, setCompetitions] = useState(null);
 
     // При монтировании компонента сразу же загружаем список лиг
-    useEffect(async () => {
-        let {competitions} = await loadCompetitions();
-        setCompetitions(competitions);
+    useEffect(() => {
+        (async function () {
+            let {competitions} = await loadCompetitions();
+            setCompetitions(competitions);
+        })();
     }, []);
 
     return (

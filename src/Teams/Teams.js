@@ -9,10 +9,12 @@ function Teams({location}) {
     let params = new URLSearchParams(location.search);
     let competition = params.get('competition');
 
-    useEffect(async () => {
-        let {count, teams} = await loadTeams(competition);
-        setTeams(teams);
-    }, []);
+    useEffect(() => {
+        (async function () {
+            let {teams} = await loadTeams(competition);
+            setTeams(teams);
+        })();
+    }, [location]);
 
     return (
         <div>

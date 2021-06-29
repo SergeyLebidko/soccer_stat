@@ -6,13 +6,15 @@ import style from './CompetitionCalendar.module.css';
 function CompetitionCalendar({location}) {
     let [matches, setMatches] = useState(null);
 
-    let params = new URLSearchParams(location.search);
-    let competition = params.get('competition');
+    useEffect(() => {
+        let params = new URLSearchParams(location.search);
+        let competition = params.get('competition');
 
-    useEffect(async () => {
-        let {count, matches} = await loadCompetitionCalendar(competition);
-        setMatches(matches);
-    }, [])
+        (async function () {
+            let {matches} = await loadCompetitionCalendar(competition);
+            setMatches(matches);
+        })();
+    }, [location])
 
     return (
         <div>

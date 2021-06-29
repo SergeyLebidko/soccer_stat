@@ -9,10 +9,12 @@ function TeamCalendar({location}) {
     let params = new URLSearchParams(location.search);
     let team = params.get('team');
 
-    useEffect(async () => {
-        let {count, matches} = await loadTeamCalendar(team);
-        setMatches(matches);
-    }, []);
+    useEffect(() => {
+        (async function () {
+            let {matches} = await loadTeamCalendar(team);
+            setMatches(matches);
+        })();
+    }, [location]);
 
     return (
         <div>
