@@ -1,6 +1,21 @@
 import {API_TOKEN} from './settings';
 import * as U from './urls';
 
+const MONTH_LIST = [
+    'января',
+    'февраля',
+    'марта',
+    'апреля',
+    'мая',
+    'июня',
+    'июля',
+    'августа',
+    'сентября',
+    'октября',
+    'ноября',
+    'декабря'
+];
+
 async function loadData(url, errorMessage) {
     let response;
     try {
@@ -43,4 +58,9 @@ export async function loadTeamCalendar(teamId) {
 export async function loadCompetition(competitionId) {
     let url = U.getCompetitionUrl(competitionId);
     return await loadData(url, 'Не удалось загрузить данные лиги');
+}
+
+export function getDateString(rawData) {
+    let date = new Date(Date.parse(rawData));
+    return `${date.getDate()} ${MONTH_LIST[date.getMonth()]} ${date.getFullYear()}`;
 }

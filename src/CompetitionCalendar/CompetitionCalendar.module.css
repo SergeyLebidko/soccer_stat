@@ -1,1 +1,90 @@
+@import '../variables.css';
 
+.matches_list {
+    margin-top: 1em;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7em 1em;
+    background-color: white;
+    border-radius: var(--border-radius);
+}
+
+.card + .card {
+    margin-top: 0.7em;
+}
+
+.info_block {
+    text-align: center;
+}
+
+.info_block + .info_block {
+    margin-top: 0.5em;
+}
+
+.date_block {
+    width: 100%;
+}
+
+.status_block {
+    width: 100%;
+}
+
+.stage_block {
+    width: 100%;
+}
+
+.command_block {
+    width: 100%;
+}
+
+.score_block {
+    width: 100%;
+}
+
+.command_block a {
+    text-decoration: none;
+    color: dimgray;
+    font-weight: bold;
+}
+
+.command_block a:hover {
+    color: black;
+}
+
+@media (min-width: 52em) {
+    .card {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .info_block + .info_block {
+        margin-top: 0;
+        margin-left: 0.5em;
+    }
+
+    .date_block {
+        flex: 1 1 15em;
+    }
+
+    .status_block {
+        flex: 1 1 10em;
+    }
+
+    .stage_block {
+        flex: 1 1 10em;
+    }
+
+    .command_block {
+        flex: 2 1 25em;
+        text-align: left;
+    }
+
+    .score_block {
+        flex: 1 1 8em;
+    }
+}
