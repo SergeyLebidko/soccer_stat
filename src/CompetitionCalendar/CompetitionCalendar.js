@@ -1,24 +1,42 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import {loadCompetitionCalendar} from '../utils';
+import Preloader from '../Preloader/Preloader';
+import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
+import {loadCompetition, loadCompetitionCalendar} from '../utils';
 import style from './CompetitionCalendar.module.css';
 
 function CompetitionCalendar({location}) {
+    let [competition, setCompetition] = useState(null);
     let [matches, setMatches] = useState(null);
+    let [error, setError] = useState(null);
 
     useEffect(() => {
         let params = new URLSearchParams(location.search);
-        let competition = params.get('competition');
+        let competitionId = params.get('competition');
+
+        if (!competitionId) {
+            setError('Некорректный URL');
+            return;
+        }
 
         (async function () {
-            let {matches} = await loadCompetitionCalendar(competition);
-            setMatches(matches);
+            try {
+                let {matches} = await loadCompetitionCalendar(competitionId);
+                let competition = await loadCompetition(competitionId);
+                setMatches(matches);
+                setCompetition(competition);
+            } catch (err) {
+                setError(err.message);
+            }
+
         })();
     }, [location])
 
-    return (
-        <div>
-            {matches ?
+    let content = <Preloader/>;
+    if (matches && competition) {
+        content = (
+            <>
+                <h1>{competition.name}</h1>
                 <ul>
                     {matches.map(
                         match =>
@@ -35,11 +53,14 @@ function CompetitionCalendar({location}) {
                             </li>
                     )}
                 </ul>
-                :
-                ''
-            }
-        </div>
-    )
+            </>
+        );
+    }
+    if (error) {
+        content = <ErrorDisplay text={error}/>
+    }
+
+    return <div>{content}</div>;
 }
 
 export default CompetitionCalendar;
