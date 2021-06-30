@@ -8,6 +8,7 @@ import {loadTeamCalendar, loadTeam} from '../utils';
 import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP} from '../settings';
 import style from './TeamCalendar.module.css';
 import commonStyle from '../common.module.css';
+import logoCap from "../images/logo_cap.png";
 
 function TeamCalendar({location}) {
     let [team, setTeam] = useState(null);
@@ -40,6 +41,20 @@ function TeamCalendar({location}) {
         content = (
             <>
                 <h1 className={commonStyle.competition_title}>{team.name}</h1>
+                <div className={style.team_info}>
+                    {team.crestUrl ?
+                        <img
+                            className={style.emblem} src={team.crestUrl}
+                            alt="no logo"
+                            onError={e => e.target.src = logoCap}
+                        />
+                        :
+                        ''
+                    }
+                    <div>
+
+                    </div>
+                </div>
                 <MatchList matches={matches}/>
                 {matches.length > countForShow ?
                     <ShowCountControl
