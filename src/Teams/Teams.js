@@ -15,6 +15,11 @@ function Teams({location}) {
         let params = new URLSearchParams(location.search);
         let competitionId = params.get('competition');
 
+        if (!competitionId) {
+            setError('Некорректный URL');
+            return;
+        }
+
         (async function () {
             try {
                 let {teams} = await loadTeams(competitionId);
