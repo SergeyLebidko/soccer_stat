@@ -1,5 +1,6 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Competitions from './Competitions/Competitions';
 import Teams from './Teams/Teams';
 import CompetitionCalendar from './CompetitionCalendar/CompetitionCalendar';
@@ -11,7 +12,7 @@ function App() {
     return (
         <div className={style.container}>
             <h1 className={style.site_title}>
-                Soccer Stat
+                <Link to="/competitions">Soccer Stat</Link>
             </h1>
             <Switch>
                 <Route exact path="/">
