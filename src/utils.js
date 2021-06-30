@@ -60,6 +60,11 @@ export async function loadCompetition(competitionId) {
     return await loadData(url, 'Не удалось загрузить данные лиги');
 }
 
+export async function loadTeam(teamId) {
+    let url = U.getTeamUrl(teamId);
+    return await loadData(url, 'Не удалось загрузить данные команды');
+}
+
 export function getDateString(rawData) {
     let date = new Date(Date.parse(rawData));
     return `${date.getDate()} ${MONTH_LIST[date.getMonth()]} ${date.getFullYear()}`;

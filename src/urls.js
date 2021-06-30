@@ -27,3 +27,7 @@ export function getTeamCalendarUrl(teamId) {
 export function getCompetitionUrl(competitionId) {
     return `${BASE}/competitions/${competitionId}`;
 }
+
+export function getTeamUrl(teamId){
+    return `${BASE}/teams/${teamId}`;
+}
