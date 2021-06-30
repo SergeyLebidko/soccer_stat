@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import MatchList from '../MatchList/MatchList';
-import {loadCompetition, loadCompetitionCalendar, getDateString} from '../utils';
+import {loadCompetition, loadCompetitionCalendar} from '../utils';
 import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP} from '../settings';
 import style from './CompetitionCalendar.module.css';
 import commonStyle from '../common.module.css';
@@ -41,7 +41,7 @@ function CompetitionCalendar({location}) {
 
     let content = <Preloader/>;
     if (matches && competition) {
-        let matchesForShow = matches.filter((match, index) => (index + 1) < countForShow);
+        let matchesForShow = matches.filter((match, index) => index < countForShow);
         content = (
             <>
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
