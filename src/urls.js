@@ -12,14 +12,18 @@ export function getCompetitionsUrl() {
     return `${BASE}/competitions/?areas=${AREAS}&plan=${PLAN}`;
 }
 
-export function getTeamsUrl(competition) {
-    return `${BASE}/competitions/${competition}/teams`;
+export function getTeamsUrl(competitionId) {
+    return `${BASE}/competitions/${competitionId}/teams`;
 }
 
-export function getCompetitionCalendarUrl(competition) {
-    return `${BASE}/competitions/${competition}/matches`;
+export function getCompetitionCalendarUrl(competitionId) {
+    return `${BASE}/competitions/${competitionId}/matches`;
 }
 
-export function getTeamCalendar(team) {
-    return `${BASE}/teams/${team}/matches`;
+export function getTeamCalendarUrl(teamId) {
+    return `${BASE}/teams/${teamId}/matches`;
+}
+
+export function getCompetitionUrl(competitionId) {
+    return `${BASE}/competitions/${competitionId}`;
 }

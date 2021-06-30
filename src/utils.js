@@ -18,24 +18,29 @@ async function loadData(url, errorMessage) {
 
 export async function loadCompetitions() {
     let url = U.getCompetitionsUrl();
-    let {count, competitions} = await loadData(url, 'Не удалось загрузить список лиг');
-    return {count, competitions};
+    let {competitions} = await loadData(url, 'Не удалось загрузить список лиг');
+    return {competitions};
 }
 
-export async function loadTeams(competition) {
-    let url = U.getTeamsUrl(competition);
-    let {count, teams} = await loadData(url, 'Не удалось загрузить список команд лиги')
-    return {count, teams};
+export async function loadTeams(competitionId) {
+    let url = U.getTeamsUrl(competitionId);
+    let {teams} = await loadData(url, 'Не удалось загрузить список команд лиги')
+    return {teams};
 }
 
-export async function loadCompetitionCalendar(competition) {
-    let url = U.getCompetitionCalendarUrl(competition);
-    let {count, matches} = await loadData(url, 'Не удалось загрузить календарь лиги');
-    return {count, matches};
+export async function loadCompetitionCalendar(competitionId) {
+    let url = U.getCompetitionCalendarUrl(competitionId);
+    let {matches} = await loadData(url, 'Не удалось загрузить календарь лиги');
+    return {matches};
 }
 
-export async function loadTeamCalendar(team) {
-    let url = U.getTeamCalendar(team);
-    let {count, matches} = await loadData(url, 'Не удалось загрузить календарь команды');
-    return {count, matches};
+export async function loadTeamCalendar(teamId) {
+    let url = U.getTeamCalendarUrl(teamId);
+    let {matches} = await loadData(url, 'Не удалось загрузить календарь команды');
+    return {matches};
+}
+
+export async function loadCompetition(competitionId) {
+    let url = U.getCompetitionUrl(competitionId);
+    return await loadData(url, 'Не удалось загрузить данные лиги');
 }

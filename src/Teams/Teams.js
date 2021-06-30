@@ -1,25 +1,35 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import {loadTeams} from '../utils';
+import {loadCompetition, loadTeams} from '../utils';
+import Preloader from '../Preloader/Preloader';
+import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import style from './Teams.module.css';
 
 function Teams({location}) {
+    let [competition, setCompetition] = useState(null);
     let [teams, setTeams] = useState(null);
     let [error, setError] = useState(null);
 
     useEffect(() => {
         let params = new URLSearchParams(location.search);
-        let competition = params.get('competition');
+        let competitionId = params.get('competition');
 
         (async function () {
-            let {teams} = await loadTeams(competition);
-            setTeams(teams);
+            try {
+                let {teams} = await loadTeams(competitionId);
+                let competition = await loadCompetition(competitionId);
+                setTeams(teams);
+            } catch (err) {
+                setError(err);
+            }
         })();
     }, [location]);
 
-    return (
-        <div>
-            {teams ?
+    let content = <Preloader/>
+    if (teams && competition) {
+        content = (
+            <>
+                <h1>{competition.name}</h1>
                 <ul>
                     {teams.map(
                         team =>
@@ -30,11 +40,14 @@ function Teams({location}) {
                             </li>
                     )}
                 </ul>
-                :
-                ''
-            }
-        </div>
-    );
+            </>
+        );
+    }
+    if (error) {
+        content = <ErrorDisplay text={error}/>
+    }
+
+    return <div>{content}</div>;
 }
 
 export default Teams;
