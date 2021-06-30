@@ -4,6 +4,7 @@ import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import {loadCompetition, loadCompetitionCalendar} from '../utils';
 import style from './CompetitionCalendar.module.css';
+import commonStyle from '../common.module.css';
 
 function CompetitionCalendar({location}) {
     let [competition, setCompetition] = useState(null);
@@ -36,7 +37,7 @@ function CompetitionCalendar({location}) {
     if (matches && competition) {
         content = (
             <>
-                <h1>{competition.name}</h1>
+                <h1 className={commonStyle.competition_title}>{competition.name}</h1>
                 <ul>
                     {matches.map(
                         match =>

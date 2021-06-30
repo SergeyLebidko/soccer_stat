@@ -5,6 +5,7 @@ import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import logoCap from '../images/logo_cap.png';
 import style from './Teams.module.css';
+import commonStyle from '../common.module.css';
 
 function Teams({location}) {
     let [competition, setCompetition] = useState(null);
@@ -40,8 +41,8 @@ function Teams({location}) {
     if (teams && competition) {
         content = (
             <>
-                <h1 className={style.competition_title}>{competition.name}</h1>
-                <ul>
+                <h1 className={commonStyle.competition_title}>{competition.name}</h1>
+                <ul className={style.teams_list}>
                     {teams.map(
                         team =>
                             <li key={team.id} className={style.card}>

@@ -1,0 +1,12 @@
+@import './variables.css';
+
+/* Стили, используемые несколькими компонентами одновременно */
+
+.competition_title {
+    padding: 0.2em 0;
+    background-color: var(--header-back-color);
+    font-family: var(--header-font-family);
+    font-size: 2em;
+    color: white;
+    text-align: center;
+}
