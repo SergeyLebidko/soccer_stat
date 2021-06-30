@@ -9,18 +9,25 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: white;
 }
 
-.card > a:last-child {
+.link_block {
     margin: 1em 0 0.5em;
+}
+
+.link_block > a + a {
+    margin-left: 1em;
+}
+
+.link_block > a {
     text-decoration: none;
     color: dimgray;
     font-size: 1.5em;
 }
 
-.card > a:last-child:hover {
+.link_block > a:hover {
     color: black;
 }
 

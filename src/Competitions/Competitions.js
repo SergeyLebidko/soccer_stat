@@ -36,7 +36,10 @@ function Competitions() {
                             </Link>
                             <h1 className={style.competition_title}>{competition.name}</h1>
                             <h3 className={style.country_title}>{competition.area.name}</h3>
-                            <Link to={`/teams/?competition=${competition.id}`}>Команды</Link>
+                            <div className={style.link_block}>
+                                <Link to={`/teams/?competition=${competition.id}`}>Команды</Link>
+                                <Link to={`/competition_calendar/?competition=${competition.id}`}>Матчи</Link>
+                            </div>
                         </div>
                 )}
             </div>
