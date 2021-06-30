@@ -5,11 +5,12 @@ import style from './Teams.module.css';
 
 function Teams({location}) {
     let [teams, setTeams] = useState(null);
-
-    let params = new URLSearchParams(location.search);
-    let competition = params.get('competition');
+    let [error, setError] = useState(null);
 
     useEffect(() => {
+        let params = new URLSearchParams(location.search);
+        let competition = params.get('competition');
+
         (async function () {
             let {teams} = await loadTeams(competition);
             setTeams(teams);

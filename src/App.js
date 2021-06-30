@@ -5,7 +5,7 @@ import Competitions from './Competitions/Competitions';
 import Teams from './Teams/Teams';
 import CompetitionCalendar from './CompetitionCalendar/CompetitionCalendar';
 import TeamCalendar from './TeamCalendar/TeamCalendar';
-import ErrorDisplay from './ErrorDisplay/ErrorDisplay';
+import NoMatch from './NoMatch/NoMatch';
 import style from './App.module.css';
 
 function App() {
@@ -22,9 +22,7 @@ function App() {
                 <Route path="/teams" component={Teams}/>
                 <Route path="/competition_calendar" component={CompetitionCalendar}/>
                 <Route path="/team_calendar" component={TeamCalendar}/>
-                <Route path="*">
-                    <ErrorDisplay text="Запрошенный URL не найден"/>
-                </Route>
+                <Route path="*" component={NoMatch}/>
             </Switch>
         </div>
     );
