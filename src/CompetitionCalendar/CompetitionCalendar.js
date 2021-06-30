@@ -119,7 +119,7 @@ function CompetitionCalendar({location}) {
                                         {STATUS_TRANSLATOR[match.status]}
                                     </td>
                                     <td>
-                                        {STAGE_TRANSLATOR[match.stage]}
+                                        {STAGE_TRANSLATOR[match.stage] || match.stage}
                                     </td>
                                     <td>
                                         {match.awayTeam.id ?
