@@ -34,10 +34,15 @@ function Teams({location}) {
                 <ul>
                     {teams.map(
                         team =>
-                            <li key={team.id}>
-                                <Link to={`/team_calendar/?team=${team.id}`}>
-                                    {team.name}
-                                </Link>
+                            <li key={team.id} className={style.card}>
+                                <img className={style.emblem} src={team.crestUrl}/>
+                                <div className={style.link_block}>
+                                    <Link to={`/team_calendar/?team=${team.id}`}>
+                                        {team.name}
+                                    </Link>
+                                    {team.website ? <a href={team.website}>сайт команды</a> : ''}
+                                </div>
+
                             </li>
                     )}
                 </ul>

@@ -9,3 +9,39 @@
     text-align: center;
     margin-bottom: 1em;
 }
+
+.card {
+    display: flex;
+    padding: 0.5em 1em;
+    background-color: white;
+    border-radius: var(--border-radius);
+}
+
+.card + .card {
+    margin-top: 1em;
+}
+
+.emblem {
+    width: 3em;
+    height: 3em;
+}
+
+.link_block {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2em;
+}
+
+.link_block a {
+    color: dimgray;
+    text-decoration: none;
+}
+
+.link_block a:hover {
+    color: black;
+}
+
+.link_block a:first-child {
+    font-size: 1.5em;
+    margin-bottom: 0.2em;
+}
