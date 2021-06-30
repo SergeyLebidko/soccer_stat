@@ -19,7 +19,11 @@ const STATUS_TRANSLATOR = {
 }
 
 const STAGE_TRANSLATOR = {
+    'PRELIMINARY_ROUND': 'Предварительный раунд',
     'REGULAR_SEASON': 'Регулярный',
+    'QUALIFICATION_ROUND_1': '1 раунд квалификаци',
+    'QUALIFICATION_ROUND_2': '2 раунд квалификаци',
+    'QUALIFICATION_ROUND_3': '3 раунд квалификаци',
     '1ST_QUALIFYING_ROUND': '1 раунд квалификаци',
     '2ND_QUALIFYING_ROUND': '2 раунд квалификации',
     '3RD_QUALIFYING_ROUND': '3 раунд квалификации',
@@ -81,61 +85,76 @@ function CompetitionCalendar({location}) {
         content = (
             <>
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
-                <ul className={style.matches_list}>
-                    <li key="header_captions" className={style.card}>
-                        <span className={style.info_block + ' ' + style.date_block}>
+                <table className={style.match_table}>
+                    <tbody>
+                    <tr key="header_captions" className={style.row}>
+                        <th>
                             Дата проведения
-                        </span>
-                        <span className={style.info_block + ' ' + style.status_block}>
+                        </th>
+                        <th>
                             Статус
-                        </span>
-                        <span className={style.info_block + ' ' + style.stage_block}>
+                        </th>
+                        <th>
                             Этап
-                        </span>
-                        <span className={style.info_block + ' ' + style.command_block}>
+                        </th>
+                        <th>
                             Гости
-                        </span>
-                        <span className={style.info_block + ' ' + style.command_block}>
+                        </th>
+                        <th>
                             Хозяева
-                        </span>
-                        <span className={style.info_block + ' ' + style.score_block}>
+                        </th>
+                        <th>
                             Исход матча
-                        </span>
-                    </li>
+                        </th>
+                    </tr>
                     {matches.map(
                         (match, index) => {
                             if ((index + 1) > countForShow) return '';
                             return (
-                                <li key={match.id} className={style.card}>
-                                <span className={style.info_block + ' ' + style.date_block}>
-                                    {getDateString(match.utcDate)}
-                                </span>
-                                    <span className={style.info_block + ' ' + style.status_block}>
-                                    {STATUS_TRANSLATOR[match.status]}
-                                </span>
-                                    <span className={style.info_block + ' ' + style.stage_block}>
-                                    {STAGE_TRANSLATOR[match.stage]}
-                                </span>
-                                    <span className={style.info_block + ' ' + style.command_block}>
-                                    <Link to={`/team_calendar/?team=${match.awayTeam.id}`}>
-                                        {match.awayTeam.name}
-                                    </Link>
-                                </span>
-                                    <span className={style.info_block + ' ' + style.command_block}>
-                                    <Link to={`/team_calendar/?team=${match.homeTeam.id}`}>
-                                        {match.homeTeam.name}
-                                    </Link>
-                                </span>
-                                    <span className={style.info_block + ' ' + style.score_block}>
-                                    {getScoreText(match)}
-                                </span>
-                                </li>
+                                <tr key={match.id} className={style.row}>
+                                    <td>
+                                        {getDateString(match.utcDate)}
+                                    </td>
+                                    <td>
+                                        {STATUS_TRANSLATOR[match.status]}
+                                    </td>
+                                    <td>
+                                        {STAGE_TRANSLATOR[match.stage]}
+                                    </td>
+                                    <td>
+                                        {match.awayTeam.id ?
+                                            <Link to={`/team_calendar/?team=${match.awayTeam.id}`}>
+                                                {match.awayTeam.name}
+                                            </Link>
+                                            :
+                                            '-'
+                                        }
+                                    </td>
+                                    <td>
+                                        {match.homeTeam.id ?
+                                            <Link to={`/team_calendar/?team=${match.homeTeam.id}`}>
+                                                {match.homeTeam.name}
+                                            </Link>
+                                            :
+                                            '-'
+                                        }
+                                    </td>
+                                    <td>
+                                        {getScoreText(match)}
+                                    </td>
+                                </tr>
                             )
                         }
                     )}
-                </ul>
+                    </tbody>
+                </table>
                 {matches.length > countForShow ?
-                    <button onClick={showMoreHandler}>Показать еще</button>
+                    <div className={style.show_more_block}>
+                        <button onClick={showMoreHandler} className={style.show_more_button}>
+                            Показать
+                            еще {(matches.length - countForShow) > DEFAULT_SHOW_STEP ? DEFAULT_SHOW_STEP : (matches.length - countForShow)}
+                        </button>
+                    </div>
                     :
                     ''
                 }
