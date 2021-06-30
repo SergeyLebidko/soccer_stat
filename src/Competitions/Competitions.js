@@ -34,7 +34,11 @@ function Competitions() {
                                     className={style.emblem}
                                 />
                             </Link>
-                            <h1 className={style.competition_title}>{competition.name}</h1>
+                            <h1 className={style.competition_title}>
+                                <Link to={`/competition_calendar/?competition=${competition.id}`}>
+                                    {competition.name}
+                                </Link>
+                            </h1>
                             <h3 className={style.country_title}>{competition.area.name}</h3>
                             <div className={style.link_block}>
                                 <Link to={`/teams/?competition=${competition.id}`}>Команды</Link>

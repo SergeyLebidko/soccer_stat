@@ -42,14 +42,20 @@
 }
 
 .competition_title {
+    background-color: var(--header-back-color);
+    width: 100%;
+    margin-top: 0.5em;
+    box-sizing: border-box;
+}
+
+.competition_title a {
+    display: inline-block;
+    text-decoration: none;
     font-family: var(--header-font-family);
     font-size: 2.5em;
     text-align: center;
     color: white;
-    background-color: var(--header-back-color);
     width: 100%;
-    padding: 0.1em;
-    margin-top: 0.5em;
     box-sizing: border-box;
 }
 
