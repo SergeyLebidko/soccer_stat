@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {loadCompetition, loadTeams} from '../utils';
 import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
+import logoCap from '../images/logo_cap.png';
 import style from './Teams.module.css';
 
 function Teams({location}) {
@@ -27,6 +28,10 @@ function Teams({location}) {
     }, [location]);
 
     let content = <Preloader/>
+
+    // При формировании карточек команд учитываем, что для некоторых команд api не возвращает доступное лого.
+    // Но даже если лого есть в api, оно может быть недоступно для загрузки.
+    // В этом случае на его место вставляем заглушку.
     if (teams && competition) {
         content = (
             <>
@@ -35,11 +40,22 @@ function Teams({location}) {
                     {teams.map(
                         team =>
                             <li key={team.id} className={style.card}>
-                                <img className={style.emblem} src={team.crestUrl}/>
+                                <div className={style.emblem_block}>
+                                    {team.crestUrl ?
+                                        <img
+                                            className={style.emblem} src={team.crestUrl}
+                                            alt="no logo"
+                                            onError={e => e.target.src = logoCap}
+                                        />
+                                        :
+                                        ''
+                                    }
+                                </div>
                                 <div className={style.link_block}>
                                     <Link to={`/team_calendar/?team=${team.id}`}>
                                         {team.name}
                                     </Link>
+                                    <span className={style.country_title}>{team.area.name}</span>
                                     {team.website ? <a href={team.website}>сайт команды</a> : ''}
                                 </div>
 
