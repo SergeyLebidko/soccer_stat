@@ -60,7 +60,7 @@ function Teams({location}) {
                                     <Link to={`/team_calendar/?team=${team.id}`}>
                                         {team.name}
                                     </Link>
-                                    <span className={style.country_title}>{team.area.name}</span>
+                                    <span className={style.country_title}>{team.area.name} ({team.venue})</span>
                                     {team.website ? <a href={team.website}>сайт команды</a> : ''}
                                 </div>
 
