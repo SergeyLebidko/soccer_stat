@@ -26,6 +26,7 @@ const STAGE_TRANSLATOR = {
     'PLAY_OFF_ROUND': 'Плей офф',
     'GROUP_STAGE': 'Групповой этап',
     'ROUND_OF_16': '1/8 финала',
+    'LAST_16': '1/8 финала',
     'QUARTER_FINALS': 'Четвертьфинал',
     'SEMI_FINALS': 'Полуфинал',
     'FINAL': 'Финал'
