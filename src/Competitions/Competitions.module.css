@@ -1,3 +1,5 @@
+@import '../variables.css';
+
 .card_container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15em, 2fr));
@@ -9,7 +11,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     background-color: white;
 }
 
@@ -40,13 +42,13 @@
 }
 
 .competition_title {
-    font-family: 'Big Shoulders Display', Arial, serif;
+    font-family: var(--header-font-family);
     font-size: 2.5em;
     text-align: center;
     color: white;
-    background-color: rgb(60, 60, 60);
+    background-color: var(--header-back-color);
     width: 100%;
-    padding: 5px;
+    padding: 0.1em;
     margin-top: 0.5em;
     box-sizing: border-box;
 }

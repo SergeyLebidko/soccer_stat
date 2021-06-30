@@ -19,8 +19,9 @@ function Teams({location}) {
                 let {teams} = await loadTeams(competitionId);
                 let competition = await loadCompetition(competitionId);
                 setTeams(teams);
+                setCompetition(competition);
             } catch (err) {
-                setError(err);
+                setError(err.message);
             }
         })();
     }, [location]);
@@ -29,7 +30,7 @@ function Teams({location}) {
     if (teams && competition) {
         content = (
             <>
-                <h1>{competition.name}</h1>
+                <h1 className={style.competition_title}>{competition.name}</h1>
                 <ul>
                     {teams.map(
                         team =>
