@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import {loadCompetition, loadCompetitionCalendar, getDateString} from '../utils';
+import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP} from '../settings';
 import style from './CompetitionCalendar.module.css';
 import commonStyle from '../common.module.css';
 
@@ -46,6 +47,7 @@ function getScoreText(match) {
 function CompetitionCalendar({location}) {
     let [competition, setCompetition] = useState(null);
     let [matches, setMatches] = useState(null);
+    let [countForShow, setCountForShow] = useState(DEFAULT_SHOW_COUNT);
     let [error, setError] = useState(null);
 
     useEffect(() => {
@@ -69,6 +71,10 @@ function CompetitionCalendar({location}) {
 
         })();
     }, [location])
+
+    let showMoreHandler = () => {
+        setCountForShow(countForShow + DEFAULT_SHOW_STEP);
+    }
 
     let content = <Preloader/>;
     if (matches && competition) {
@@ -97,33 +103,42 @@ function CompetitionCalendar({location}) {
                         </span>
                     </li>
                     {matches.map(
-                        match =>
-                            <li key={match.id} className={style.card}>
+                        (match, index) => {
+                            if ((index + 1) > countForShow) return '';
+                            return (
+                                <li key={match.id} className={style.card}>
                                 <span className={style.info_block + ' ' + style.date_block}>
                                     {getDateString(match.utcDate)}
                                 </span>
-                                <span className={style.info_block + ' ' + style.status_block}>
+                                    <span className={style.info_block + ' ' + style.status_block}>
                                     {STATUS_TRANSLATOR[match.status]}
                                 </span>
-                                <span className={style.info_block + ' ' + style.stage_block}>
+                                    <span className={style.info_block + ' ' + style.stage_block}>
                                     {STAGE_TRANSLATOR[match.stage]}
                                 </span>
-                                <span className={style.info_block + ' ' + style.command_block}>
+                                    <span className={style.info_block + ' ' + style.command_block}>
                                     <Link to={`/team_calendar/?team=${match.awayTeam.id}`}>
                                         {match.awayTeam.name}
                                     </Link>
                                 </span>
-                                <span className={style.info_block + ' ' + style.command_block}>
+                                    <span className={style.info_block + ' ' + style.command_block}>
                                     <Link to={`/team_calendar/?team=${match.homeTeam.id}`}>
                                         {match.homeTeam.name}
                                     </Link>
                                 </span>
-                                <span className={style.info_block + ' ' + style.score_block}>
+                                    <span className={style.info_block + ' ' + style.score_block}>
                                     {getScoreText(match)}
                                 </span>
-                            </li>
+                                </li>
+                            )
+                        }
                     )}
                 </ul>
+                {matches.length > countForShow ?
+                    <button onClick={showMoreHandler}>Показать еще</button>
+                    :
+                    ''
+                }
             </>
         );
     }
