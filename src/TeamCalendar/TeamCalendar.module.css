@@ -1,8 +1,18 @@
 @import '../variables.css';
 
+.teams_calendar_container {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.teams_calendar_container > * + * {
+    margin-top: 1em;
+}
+
 .team_info {
     position: relative;
-    margin-top: 1em;
     background-color: white;
     padding: 0.5em;
     border-radius: var(--border-radius);
@@ -47,6 +57,16 @@
 
 .summary_info a:hover {
     color: orangered;
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters > * + * {
+    margin-left: 0.5em;
 }
 
 .squad_block {

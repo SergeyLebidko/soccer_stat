@@ -3,7 +3,7 @@ import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import MatchList from '../MatchList/MatchList';
 import ShowCountControl from '../ShowCountControl/ShowCountControl';
-import {loadCompetition, loadCompetitionCalendar} from '../utils';
+import {loadCompetition, loadCompetitionCalendar, matchesFilter} from '../utils';
 import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP} from '../settings';
 import commonStyle from '../common.module.css';
 import style from './CompetitionCalendar.module.css'
@@ -31,15 +31,7 @@ function CompetitionCalendar({history, location}) {
                 let {matches} = await loadCompetitionCalendar(competitionId);
 
                 // Если нужно - фильтруем список матчей
-                if (search) {
-                    matches = matches.filter(match => {
-                        let f1, f2;
-                        f1 = f2 = false;
-                        if (match.homeTeam.id) f1 = match.homeTeam.name.toLowerCase().includes(search.toLowerCase());
-                        if (match.awayTeam.id) f2 = match.awayTeam.name.toLowerCase().includes(search.toLowerCase());
-                        return f1 || f2;
-                    });
-                }
+                if (search) matches = matchesFilter(matches, search);
 
                 let competition = await loadCompetition(competitionId);
                 setMatches(matches);

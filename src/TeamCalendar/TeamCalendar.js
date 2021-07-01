@@ -1,14 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import MatchList from '../MatchList/MatchList';
 import ShowCountControl from '../ShowCountControl/ShowCountControl';
 import {withRouter} from 'react-router-dom';
-import {loadTeamCalendar, loadTeam} from '../utils';
+import {loadTeamCalendar, loadTeam, matchesFilter} from '../utils';
 import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP} from '../settings';
 import style from './TeamCalendar.module.css';
 import commonStyle from '../common.module.css';
-import logoCap from "../images/logo_cap.png";
+import logoCap from '../images/logo_cap.png';
+import find from '../images/find.svg';
 
 const PLAYER_POSITION_TRANSLATOR = {
     'Midfielder': 'Полузащитник',
@@ -17,20 +18,31 @@ const PLAYER_POSITION_TRANSLATOR = {
     'Defender': 'Защитник',
 }
 
-function TeamCalendar({location}) {
+function TeamCalendar({location, history}) {
     let [team, setTeam] = useState(null);
     let [matches, setMatches] = useState(null);
     let [countForShow, setCountForShow] = useState(DEFAULT_SHOW_COUNT);
     let [error, setError] = useState(null);
     let [showSquad, setShowSquad] = useState(false);
+    let searchInput = useRef(null);
+
+    let params = new URLSearchParams(location.search);
+    let teamId = params.get('team');
+    let search = params.get('search');
 
     useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        let teamId = params.get('team');
+        if (!teamId) {
+            setError('Некорректный URL');
+            return;
+        }
 
         (async function () {
             try {
                 let {matches} = await loadTeamCalendar(teamId);
+
+                // Применяем фильтры
+                if (search) matches = matchesFilter(matches, search);
+
                 let team = await loadTeam(teamId);
                 setMatches(matches);
                 setTeam(team);
@@ -48,10 +60,26 @@ function TeamCalendar({location}) {
         setShowSquad(!showSquad);
     }
 
+    // Обработчик клика по кнопке поиска
+    let findClickHandler = () => {
+        let params = new URLSearchParams();
+        params.append('team', teamId);
+
+        let searchValue = searchInput.current.value.trim();
+        if (searchValue) params.append('search', searchValue);
+
+        history.push(`/team_calendar/?${params.toString()}`);
+    }
+
+    // Обработчик нажатия на Enter в поле ввода
+    let enterHandler = event => {
+        if (event.keyCode === 13) findClickHandler();
+    }
+
     let content = <Preloader/>;
     if (team && matches) {
         content = (
-            <>
+            <div className={style.teams_calendar_container}>
                 <h1 className={commonStyle.competition_title}>{team.name}</h1>
                 <div className={style.team_info}>
                     {team.crestUrl ?
@@ -106,6 +134,16 @@ function TeamCalendar({location}) {
                         ''
                     }
                 </div>
+                <div className={style.filters}>
+                    <input
+                        type="text"
+                        className={commonStyle.text_input}
+                        ref={searchInput}
+                        defaultValue={search ? search : ''}
+                        onKeyUp={enterHandler}
+                    />
+                    <img src={find} className={commonStyle.find_button} onClick={findClickHandler}/>
+                </div>
                 <MatchList matches={matches}/>
                 {matches.length > countForShow ?
                     <ShowCountControl
@@ -116,7 +154,7 @@ function TeamCalendar({location}) {
                     :
                     ''
                 }
-            </>
+            </div>
         )
     }
     if (error) {

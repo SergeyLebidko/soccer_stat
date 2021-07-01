@@ -1,21 +1,7 @@
 import {API_TOKEN} from './settings';
 import * as U from './urls';
 
-const MONTH_LIST = [
-    'января',
-    'февраля',
-    'марта',
-    'апреля',
-    'мая',
-    'июня',
-    'июля',
-    'августа',
-    'сентября',
-    'октября',
-    'ноября',
-    'декабря'
-];
-
+// Блок функций для загрузки данных
 async function loadData(url, errorMessage) {
     let response;
     try {
@@ -65,7 +51,34 @@ export async function loadTeam(teamId) {
     return await loadData(url, 'Не удалось загрузить данные команды');
 }
 
+// Функция нижк преобразует переданную строку с датой в удобочитаемый формат
+const MONTH_LIST = [
+    'января',
+    'февраля',
+    'марта',
+    'апреля',
+    'мая',
+    'июня',
+    'июля',
+    'августа',
+    'сентября',
+    'октября',
+    'ноября',
+    'декабря'
+];
+
 export function getDateString(rawData) {
     let date = new Date(Date.parse(rawData));
     return `${date.getDate()} ${MONTH_LIST[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+// Функция для фильтрации списка матчей
+export function matchesFilter(matches, search) {
+    return matches.filter(match => {
+        let f1, f2;
+        f1 = f2 = false;
+        if (match.homeTeam.id) f1 = match.homeTeam.name.toLowerCase().includes(search.toLowerCase());
+        if (match.awayTeam.id) f2 = match.awayTeam.name.toLowerCase().includes(search.toLowerCase());
+        return f1 || f2;
+    });
 }
