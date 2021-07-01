@@ -10,10 +10,31 @@
 
 .filters {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .filters > * + * {
-    margin-left: 0.5em;
+    margin-top: 0.5em;
+    margin-left: 0;
+}
+
+/* Кнопку поиска в мобильной версии перемещаем к правому краю экрана */
+
+.filters img {
+    align-self: flex-end;
+}
+
+@media (min-width: 48em) {
+    .filters {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .filters > * + * {
+        margin-top: 0;
+        margin-left: 0.5em;
+    }
 }

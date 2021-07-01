@@ -4,10 +4,12 @@ import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import MatchList from '../MatchList/MatchList';
 import ShowCountControl from '../ShowCountControl/ShowCountControl';
 import {loadCompetition, loadCompetitionCalendar, matchesFilter} from '../utils';
-import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP} from '../settings';
+import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP, EARLIE_SEASON} from '../settings';
 import commonStyle from '../common.module.css';
 import style from './CompetitionCalendar.module.css'
 import find from '../images/find.svg';
+
+const CURRENT_SEASON = 'cs';
 
 function CompetitionCalendar({history, location}) {
     let [competition, setCompetition] = useState(null);
@@ -15,10 +17,12 @@ function CompetitionCalendar({history, location}) {
     let [countForShow, setCountForShow] = useState(DEFAULT_SHOW_COUNT);
     let [error, setError] = useState(null);
     let searchInput = useRef(null);
+    let seasonInput = useRef(null);
 
     let params = new URLSearchParams(location.search);
     let competitionId = params.get('competition');
     let search = params.get('search');
+    let season = params.get('season');
 
     useEffect(() => {
         if (!competitionId) {
@@ -28,7 +32,7 @@ function CompetitionCalendar({history, location}) {
 
         (async function () {
             try {
-                let {matches} = await loadCompetitionCalendar(competitionId);
+                let {matches} = await loadCompetitionCalendar(competitionId, season);
 
                 // Если нужно - фильтруем список матчей
                 if (search) matches = matchesFilter(matches, search);
@@ -51,8 +55,13 @@ function CompetitionCalendar({history, location}) {
         let params = new URLSearchParams();
         params.append('competition', competitionId);
 
+        // Обрабатываем строку поиска
         let searchValue = searchInput.current.value.trim();
         if (searchValue) params.append('search', searchValue);
+
+        // Обрабатываем выбор сезона
+        let seasonValue = seasonInput.current.value;
+        if (seasonValue !== CURRENT_SEASON) params.append('season', seasonValue);
 
         history.push(`/competition_calendar/?${params.toString()}`);
     }
@@ -62,6 +71,26 @@ function CompetitionCalendar({history, location}) {
         if (event.keyCode === 13) findClickHandler();
     }
 
+    // Обработчик выбора сезона
+    let seasonChangeHandler = event => {
+        findClickHandler();
+    }
+
+    // Готовим список сезонов
+    let seasonsForSelector = [
+        {
+            value: CURRENT_SEASON,
+            name: 'Текущий сезон'
+        }
+    ];
+    let currentYear = new Date().getFullYear();
+    for (let year = currentYear; year >= EARLIE_SEASON; year--) {
+        seasonsForSelector.push({
+            value: `${year}`,
+            name: `${year}`
+        });
+    }
+
     let content = <Preloader/>;
     if (matches && competition) {
         let matchesForShow = matches.filter((match, index) => index < countForShow);
@@ -69,6 +98,14 @@ function CompetitionCalendar({history, location}) {
             <div className={style.matches_container}>
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
                 <div className={style.filters}>
+                    <select className={commonStyle.selector} ref={seasonInput} onChange={seasonChangeHandler}>
+                        {seasonsForSelector.map(
+                            season =>
+                                <option key={season.value} value={season.value}>
+                                    {season.name}
+                                </option>
+                        )}
+                    </select>
                     <input
                         type="text"
                         className={commonStyle.text_input}

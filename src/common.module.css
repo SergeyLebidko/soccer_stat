@@ -41,9 +41,21 @@
     border-radius: var(--border-radius);
 }
 
+.selector {
+    border: 1px solid lightgray;
+    outline: lightgray;
+    padding: 0.5em 1em;
+    border-radius: var(--border-radius);
+    background-color: white;
+}
+
 @media (min-width: 48em) {
     .text_input {
         padding: 0.5em 1.5em;
+        font-size: 1.2em;
+    }
+
+    .selector {
         font-size: 1.2em;
     }
 }
