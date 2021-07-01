@@ -4,6 +4,8 @@ import {loadCompetitions} from '../utils';
 import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import style from './Competitions.module.css';
+import commonStyle from '../common.module.css';
+import find from '../images/find.svg';
 
 function Competitions() {
     let [competitions, setCompetitions] = useState(null);
@@ -24,28 +26,34 @@ function Competitions() {
     let content = <Preloader/>;
     if (competitions) {
         content = (
-            <div className={style.card_container}>
-                {competitions.map(
-                    competition =>
-                        <div key={competition.id} className={style.card}>
-                            <Link to={`/competition_calendar/?competition=${competition.id}`}>
-                                <img
-                                    src={competition.emblemUrl || competition.area.ensignUrl}
-                                    className={style.emblem}
-                                />
-                            </Link>
-                            <h1 className={style.competition_title}>
+            <div className={style.competition_container}>
+                <div className={style.filters}>
+                    <input type="text" className={commonStyle.text_input}/>
+                    <img src={find} className={commonStyle.find_button}/>
+                </div>
+                <div className={style.card_container}>
+                    {competitions.map(
+                        competition =>
+                            <div key={competition.id} className={style.card}>
                                 <Link to={`/competition_calendar/?competition=${competition.id}`}>
-                                    {competition.name}
+                                    <img
+                                        src={competition.emblemUrl || competition.area.ensignUrl}
+                                        className={style.emblem}
+                                    />
                                 </Link>
-                            </h1>
-                            <h3 className={style.country_title}>{competition.area.name}</h3>
-                            <div className={style.link_block}>
-                                <Link to={`/teams/?competition=${competition.id}`}>Команды</Link>
-                                <Link to={`/competition_calendar/?competition=${competition.id}`}>Матчи</Link>
+                                <h1 className={style.competition_title}>
+                                    <Link to={`/competition_calendar/?competition=${competition.id}`}>
+                                        {competition.name}
+                                    </Link>
+                                </h1>
+                                <h3 className={style.country_title}>{competition.area.name}</h3>
+                                <div className={style.link_block}>
+                                    <Link to={`/teams/?competition=${competition.id}`}>Команды</Link>
+                                    <Link to={`/competition_calendar/?competition=${competition.id}`}>Матчи</Link>
+                                </div>
                             </div>
-                        </div>
-                )}
+                    )}
+                </div>
             </div>
         );
     }

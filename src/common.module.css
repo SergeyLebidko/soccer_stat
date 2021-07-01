@@ -10,3 +10,40 @@
     color: white;
     text-align: center;
 }
+
+.find_button {
+    width: 2em;
+    height: 1em;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.find_button:active {
+    background-color: orangered;
+    transform: scale(0.8);
+    transition: all 150ms;
+}
+
+@media (min-width: 48em) {
+    .find_button {
+        width: 3em;
+        height: 2em;
+    }
+}
+
+.text_input {
+    border: 1px solid lightgray;
+    outline: lightgray;
+    padding: 0.5em 1em;
+    border-radius: var(--border-radius);
+}
+
+@media (min-width: 48em) {
+    .text_input {
+        padding: 0.5em 1.5em;
+        font-size: 1.2em;
+    }
+}
