@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import {loadCompetition, loadTeams} from '../utils';
 import Preloader from '../Preloader/Preloader';
@@ -6,16 +6,19 @@ import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import logoCap from '../images/logo_cap.png';
 import style from './Teams.module.css';
 import commonStyle from '../common.module.css';
+import find from "../images/find.svg";
 
-function Teams({location}) {
+function Teams({history, location}) {
     let [competition, setCompetition] = useState(null);
     let [teams, setTeams] = useState(null);
     let [error, setError] = useState(null);
+    let searchInput = useRef(null);
+
+    let params = new URLSearchParams(location.search);
+    let competitionId = params.get('competition');
+    let search = params.get('search');
 
     useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        let competitionId = params.get('competition');
-
         if (!competitionId) {
             setError('Некорректный URL');
             return;
@@ -24,6 +27,10 @@ function Teams({location}) {
         (async function () {
             try {
                 let {teams} = await loadTeams(competitionId);
+
+                // При необходимости фильтруем элементы по текущим параметрам поиска
+                if (search) teams = teams.filter(team => team.name.toLowerCase().includes(search.toLowerCase()));
+
                 let competition = await loadCompetition(competitionId);
                 setTeams(teams);
                 setCompetition(competition);
@@ -33,6 +40,22 @@ function Teams({location}) {
         })();
     }, [location]);
 
+    // Обработчик клика по кнопке поиска
+    let findClickHandler = () => {
+        let params = new URLSearchParams();
+        params.append('competition', competitionId);
+
+        let searchValue = searchInput.current.value.trim();
+        if (searchValue) params.append('search', searchValue);
+
+        history.push(`/teams/?${params.toString()}`);
+    }
+
+    // Обработчик нажатия на Enter в поле ввода
+    let enterHandler = event => {
+        if (event.keyCode === 13) findClickHandler();
+    }
+
     let content = <Preloader/>
 
     // При формировании карточек команд учитываем, что для некоторых команд api не возвращает доступное лого.
@@ -40,9 +63,19 @@ function Teams({location}) {
     // В этом случае на его место вставляем заглушку.
     if (teams && competition) {
         content = (
-            <>
+            <div className={style.teams_container}>
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
-                <ul className={style.teams_list}>
+                <div className={style.filters}>
+                    <input
+                        type="text"
+                        className={commonStyle.text_input}
+                        ref={searchInput}
+                        defaultValue={search ? search : ''}
+                        onKeyUp={enterHandler}
+                    />
+                    <img src={find} className={commonStyle.find_button} onClick={findClickHandler}/>
+                </div>
+                <ul>
                     {teams.map(
                         team =>
                             <li key={team.id} className={style.card}>
@@ -68,7 +101,7 @@ function Teams({location}) {
                             </li>
                     )}
                 </ul>
-            </>
+            </div>
         );
     }
     if (error) {

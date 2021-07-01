@@ -1,7 +1,23 @@
 @import '../variables.css';
 
-.teams_list {
+.teams_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.teams_container > * + * {
     margin-top: 1em;
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters > * + * {
+    margin-left: 0.5em;
 }
 
 .card {
