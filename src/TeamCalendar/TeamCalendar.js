@@ -64,7 +64,7 @@ function TeamCalendar({location}) {
                         :
                         ''
                     }
-                    <ul>
+                    <ul className={style.summary_info}>
                         {team.shortname ? <li><span>{team.shortname}</span></li> : ''}
                         {team.address ? <li><span>{team.address}</span></li> : ''}
                         {team.website ? <li><a href={team.website}>сайт команды</a></li> : ''}
@@ -73,12 +73,12 @@ function TeamCalendar({location}) {
                         {team.venue ? <li>{team.venue}</li> : ''}
                     </ul>
                     {team.squad.length > 0 ?
-                        <div>
-                            <span onClick={showSquadHandler}>
-                                {showSquad ? "Скрыть" : "Показать игроков"}
+                        <div className={style.squad_block}>
+                            <span className={style.show_squad_button} onClick={showSquadHandler}>
+                                {showSquad ? "Скрыть состав" : "Показать состав"}
                             </span>
                             {showSquad ?
-                                <table>
+                                <table className={style.squad_table}>
                                     <tbody>
                                     {team.squad.map(
                                         player =>

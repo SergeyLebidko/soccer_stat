@@ -1,16 +1,79 @@
 @import '../variables.css';
 
 .team_info {
+    position: relative;
     margin-top: 1em;
     background-color: white;
     padding: 0.5em;
     border-radius: var(--border-radius);
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+@media (min-width: 60em){
+    .team_info {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
 }
 
 .emblem {
     width: 10em;
     height: 10em;
+}
+
+.summary_info {
+    margin: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summary_info li {
+    text-align: center;
+}
+
+.summary_info li + li {
+    margin-top: 0.5em;
+}
+
+.summary_info a {
+    color: dimgray;
+    text-decoration: none;
+}
+
+.summary_info a:hover {
+    color: orangered;
+}
+
+.squad_block {
+    margin: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.squad_table {
+    margin-top: 1em;
+    background-color: whitesmoke;
+    padding: 0.5em;
+    border-radius: var(--border-radius);
+}
+
+.squad_table td {
+    padding: 5px 0;
+    border-bottom: 1px dashed dimgray;
+}
+
+
+.show_squad_button {
+    padding: 0.5em 1em;
+    color: white;
+    background-color: var(--header-back-color);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius);
 }

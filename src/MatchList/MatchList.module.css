@@ -32,7 +32,7 @@
 }
 
 .match_table a:hover {
-    color: black;
+    color: orangered;
 }
 
 @media (max-width: 48em) {
