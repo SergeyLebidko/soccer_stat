@@ -12,7 +12,7 @@
     align-items: center;
 }
 
-@media (min-width: 60em){
+@media (min-width: 60em) {
     .team_info {
         flex-direction: row;
         justify-content: space-between;
@@ -56,18 +56,41 @@
     align-items: center;
 }
 
-.squad_table {
+.squad_table_container {
+    max-height: 15em;
+    overflow: auto;
     margin-top: 1em;
+    border-radius: var(--border-radius);
+    border: 1px solid lightgray;
+}
+
+.squad_table_container::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.squad_table_container::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: var(--border-radius);
+}
+
+.squad_table_container:hover::-webkit-scrollbar-thumb {
+    background-color: dimgray;
+}
+
+.squad_table_container::-webkit-scrollbar-corner {
+    border-radius: var(--border-radius);
+}
+
+.squad_table {
     background-color: whitesmoke;
     padding: 0.5em;
-    border-radius: var(--border-radius);
 }
 
 .squad_table td {
     padding: 5px 0;
     border-bottom: 1px dashed dimgray;
 }
-
 
 .show_squad_button {
     padding: 0.5em 1em;
@@ -76,4 +99,10 @@
     cursor: pointer;
     border: none;
     border-radius: var(--border-radius);
+}
+
+@media (min-width: 60em) {
+    .show_squad_button {
+        align-self: flex-end;
+    }
 }

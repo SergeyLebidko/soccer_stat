@@ -15,7 +15,6 @@ const PLAYER_POSITION_TRANSLATOR = {
     'Attacker': 'Атакующий',
     'Goalkeeper': 'Голкипер',
     'Defender': 'Защитник',
-    '': ''
 }
 
 function TeamCalendar({location}) {
@@ -78,25 +77,27 @@ function TeamCalendar({location}) {
                                 {showSquad ? "Скрыть состав" : "Показать состав"}
                             </span>
                             {showSquad ?
-                                <table className={style.squad_table}>
-                                    <tbody>
-                                    {team.squad.map(
-                                        player =>
-                                            <tr key={player.id}>
-                                                <td>
-                                                    {player.name}
-                                                </td>
-                                                <td>
-                                                    {player.position ?
-                                                        PLAYER_POSITION_TRANSLATOR[player.position] || player.position
-                                                        :
-                                                        ''
-                                                    }
-                                                </td>
-                                            </tr>
-                                    )}
-                                    </tbody>
-                                </table>
+                                <div className={style.squad_table_container}>
+                                    <table className={style.squad_table}>
+                                        <tbody>
+                                        {team.squad.map(
+                                            player =>
+                                                <tr key={player.id}>
+                                                    <td>
+                                                        {player.name}
+                                                    </td>
+                                                    <td>
+                                                        {player.position ?
+                                                            PLAYER_POSITION_TRANSLATOR[player.position] || player.position
+                                                            :
+                                                            ''
+                                                        }
+                                                    </td>
+                                                </tr>
+                                        )}
+                                        </tbody>
+                                    </table>
+                                </div>
                                 :
                                 ''
                             }
