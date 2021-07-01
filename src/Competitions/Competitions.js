@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import {loadCompetitions} from '../utils';
 import Preloader from '../Preloader/Preloader';
@@ -7,29 +7,62 @@ import style from './Competitions.module.css';
 import commonStyle from '../common.module.css';
 import find from '../images/find.svg';
 
-function Competitions() {
+function Competitions({history, location}) {
     let [competitions, setCompetitions] = useState(null);
     let [error, setError] = useState(null);
+    let searchInput = useRef(null);
+
+    let params = new URLSearchParams(location.search);
+    let search = params.get('search');
 
     // При монтировании компонента сразу же загружаем список лиг
     useEffect(() => {
         (async function () {
             try {
                 let {competitions} = await loadCompetitions();
+
+                // Если в URL задана строка поиска, то фильтруем список лиг
+                if (search) {
+                    competitions = competitions.filter(competition => competition.name.toLowerCase().includes(search.toLowerCase()));
+                }
+
                 setCompetitions(competitions);
             } catch (err) {
                 setError(err.message);
             }
         })();
-    }, []);
+    }, [location]);
+
+    // Обработчик клика по кнопке поиска
+    let findClickHandler = () => {
+        let searchValue = searchInput.current.value.trim();
+        if (searchValue) {
+            let params = new URLSearchParams();
+            params.append('search', searchValue);
+            history.push(`/competitions/?${params.toString()}`);
+            return;
+        }
+        history.push('/competitions');
+    }
+
+    // Обработчик нажатия на Enter в поле ввода
+    let enterHandler = event => {
+        if (event.keyCode === 13) findClickHandler();
+    }
 
     let content = <Preloader/>;
     if (competitions) {
         content = (
             <div className={style.competition_container}>
                 <div className={style.filters}>
-                    <input type="text" className={commonStyle.text_input}/>
-                    <img src={find} className={commonStyle.find_button}/>
+                    <input
+                        type="text"
+                        className={commonStyle.text_input}
+                        ref={searchInput}
+                        defaultValue={search ? search : ''}
+                        onKeyUp={enterHandler}
+                    />
+                    <img src={find} className={commonStyle.find_button} onClick={findClickHandler}/>
                 </div>
                 <div className={style.card_container}>
                     {competitions.map(
