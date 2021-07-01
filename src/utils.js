@@ -14,6 +14,7 @@ async function loadData(url, errorMessage) {
         throw new Error(`${errorMessage}. Превышен лимит количества запросов. Попробуйте выполнить запрос позже.`);
     }
     if (response.status === 403) throw new Error(`${errorMessage}. Данные не доступны для вашего тарифного плана.`);
+    if (response.status === 404) throw new Error(`${errorMessage}. Запрошенные данные отсутствуют на сервере.`);
     if (!response.ok) throw new Error(errorMessage);
     return await response.json();
 }
