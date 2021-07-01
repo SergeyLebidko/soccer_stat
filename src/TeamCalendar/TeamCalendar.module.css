@@ -1,6 +1,13 @@
+@import '../variables.css';
+
 .team_info {
     margin-top: 1em;
-
+    background-color: white;
+    padding: 0.5em;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .emblem {

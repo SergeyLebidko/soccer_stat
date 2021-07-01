@@ -10,11 +10,20 @@ import style from './TeamCalendar.module.css';
 import commonStyle from '../common.module.css';
 import logoCap from "../images/logo_cap.png";
 
+const PLAYER_POSITION_TRANSLATOR = {
+    'Midfielder': 'Полузащитник',
+    'Attacker': 'Атакующий',
+    'Goalkeeper': 'Голкипер',
+    'Defender': 'Защитник',
+    '': ''
+}
+
 function TeamCalendar({location}) {
     let [team, setTeam] = useState(null);
     let [matches, setMatches] = useState(null);
     let [countForShow, setCountForShow] = useState(DEFAULT_SHOW_COUNT);
     let [error, setError] = useState(null);
+    let [showSquad, setShowSquad] = useState(false);
 
     useEffect(() => {
         let params = new URLSearchParams(location.search);
@@ -36,6 +45,10 @@ function TeamCalendar({location}) {
         setCountForShow(countForShow + DEFAULT_SHOW_STEP);
     }
 
+    let showSquadHandler = () => {
+        setShowSquad(!showSquad);
+    }
+
     let content = <Preloader/>;
     if (team && matches) {
         content = (
@@ -51,9 +64,46 @@ function TeamCalendar({location}) {
                         :
                         ''
                     }
-                    <div>
-
-                    </div>
+                    <ul>
+                        {team.shortname ? <li><span>{team.shortname}</span></li> : ''}
+                        {team.address ? <li><span>{team.address}</span></li> : ''}
+                        {team.website ? <li><a href={team.website}>сайт команды</a></li> : ''}
+                        {team.email ? <li><a href={`mailto:${team.email}`}>{team.email}</a></li> : ''}
+                        {team.founded ? <li>{team.founded}</li> : ''}
+                        {team.venue ? <li>{team.venue}</li> : ''}
+                    </ul>
+                    {team.squad.length > 0 ?
+                        <div>
+                            <span onClick={showSquadHandler}>
+                                {showSquad ? "Скрыть" : "Показать игроков"}
+                            </span>
+                            {showSquad ?
+                                <table>
+                                    <tbody>
+                                    {team.squad.map(
+                                        player =>
+                                            <tr key={player.id}>
+                                                <td>
+                                                    {player.name}
+                                                </td>
+                                                <td>
+                                                    {player.position ?
+                                                        PLAYER_POSITION_TRANSLATOR[player.position] || player.position
+                                                        :
+                                                        ''
+                                                    }
+                                                </td>
+                                            </tr>
+                                    )}
+                                    </tbody>
+                                </table>
+                                :
+                                ''
+                            }
+                        </div>
+                        :
+                        ''
+                    }
                 </div>
                 <MatchList matches={matches}/>
                 {matches.length > countForShow ?
@@ -69,7 +119,7 @@ function TeamCalendar({location}) {
         )
     }
     if (error) {
-        content = <ErrorDisplay text={error}/>
+        content = <ErrorDisplay text={error}/>;
     }
 
     return <div>{content}</div>;
