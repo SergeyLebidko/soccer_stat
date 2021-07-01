@@ -11,8 +11,9 @@ async function loadData(url, errorMessage) {
             }
         });
     } catch (err) {
-        throw new Error(`${errorMessage} (${err.toString()})`);
+        throw new Error(`${errorMessage}. Превышен лимит количества запросов. Попробуйте выполнить запрос позже.`);
     }
+    if (response.status === 403) throw new Error(`${errorMessage}. Данные не доступны для вашего тарифного плана.`);
     if (!response.ok) throw new Error(errorMessage);
     return await response.json();
 }
