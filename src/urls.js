@@ -12,8 +12,10 @@ export function getCompetitionsUrl() {
     return `${BASE}/competitions/?areas=${AREAS}&plan=${PLAN}`;
 }
 
-export function getTeamsUrl(competitionId) {
-    return `${BASE}/competitions/${competitionId}/teams`;
+export function getTeamsUrl(competitionId, season) {
+    let url = `${BASE}/competitions/${competitionId}/teams`;
+    if (season) url += `/?season=${season}`;
+    return url;
 }
 
 export function getCompetitionCalendarUrl(competitionId, season) {

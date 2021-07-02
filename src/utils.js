@@ -25,8 +25,8 @@ export async function loadCompetitions() {
     return {competitions};
 }
 
-export async function loadTeams(competitionId) {
-    let url = U.getTeamsUrl(competitionId);
+export async function loadTeams(competitionId, season) {
+    let url = U.getTeamsUrl(competitionId, season);
     let {teams} = await loadData(url, 'Не удалось загрузить список команд лиги')
     return {teams};
 }

@@ -71,7 +71,7 @@ function CompetitionCalendar({history, location}) {
     }
 
     // Обработчик выбора сезона
-    let seasonChangeHandler = event => {
+    let seasonChangeHandler = () => {
         findClickHandler();
     }
 
@@ -81,7 +81,7 @@ function CompetitionCalendar({history, location}) {
         content = (
             <div className={style.matches_container}>
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
-                <div className={style.filters}>
+                <div className={commonStyle.filters}>
                     <SeasonSelector ref={seasonInput} seasonChangeHandler={seasonChangeHandler}/>
                     <input
                         type="text"

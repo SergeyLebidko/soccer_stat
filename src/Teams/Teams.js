@@ -3,20 +3,24 @@ import {Link} from 'react-router-dom';
 import {loadCompetition, loadTeams} from '../utils';
 import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
+import SeasonSelector from '../SeasonSelector/SeasonSelector';
 import logoCap from '../images/logo_cap.png';
 import style from './Teams.module.css';
 import commonStyle from '../common.module.css';
-import find from "../images/find.svg";
+import find from '../images/find.svg';
+import {CURRENT_SEASON} from '../settings';
 
 function Teams({history, location}) {
     let [competition, setCompetition] = useState(null);
     let [teams, setTeams] = useState(null);
     let [error, setError] = useState(null);
     let searchInput = useRef(null);
+    let seasonInput = useRef(null);
 
     let params = new URLSearchParams(location.search);
     let competitionId = params.get('competition');
     let search = params.get('search');
+    let season = params.get('season');
 
     useEffect(() => {
         if (!competitionId) {
@@ -26,7 +30,7 @@ function Teams({history, location}) {
 
         (async function () {
             try {
-                let {teams} = await loadTeams(competitionId);
+                let {teams} = await loadTeams(competitionId, season);
 
                 // При необходимости фильтруем элементы по текущим параметрам поиска
                 if (search) teams = teams.filter(team => team.name.toLowerCase().includes(search.toLowerCase()));
@@ -45,8 +49,13 @@ function Teams({history, location}) {
         let params = new URLSearchParams();
         params.append('competition', competitionId);
 
+        // Обрабатываем строку поиска
         let searchValue = searchInput.current.value.trim();
         if (searchValue) params.append('search', searchValue);
+
+        // Обрабатываем выбор сезона
+        let seasonValue = seasonInput.current.value.trim();
+        if (seasonValue !== CURRENT_SEASON) params.append('season', seasonValue);
 
         history.push(`/teams/?${params.toString()}`);
     }
@@ -54,6 +63,11 @@ function Teams({history, location}) {
     // Обработчик нажатия на Enter в поле ввода
     let enterHandler = event => {
         if (event.keyCode === 13) findClickHandler();
+    }
+
+    // Обработчик выбора сезона
+    let seasonChangeHandler = () => {
+        findClickHandler();
     }
 
     let content = <Preloader/>
@@ -65,7 +79,8 @@ function Teams({history, location}) {
         content = (
             <div className={style.teams_container}>
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
-                <div className={style.filters}>
+                <div className={commonStyle.filters}>
+                    <SeasonSelector ref={seasonInput} seasonChangeHandler={seasonChangeHandler}/>
                     <input
                         type="text"
                         className={commonStyle.text_input}
