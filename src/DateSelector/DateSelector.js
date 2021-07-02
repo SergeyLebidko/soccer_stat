@@ -20,6 +20,9 @@ function getDateToString() {
 function DateSelector({dateFromRef, dateToRef, dateFromDefault, dateToDefault, dateChangeHandler}) {
     return (
         <div className={style.date_container}>
+            <span>
+                От:
+            </span>
             <input
                 type="date"
                 className={commonStyle.selector}
@@ -27,6 +30,9 @@ function DateSelector({dateFromRef, dateToRef, dateFromDefault, dateToDefault, d
                 onChange={dateChangeHandler}
                 defaultValue={dateFromDefault ? dateFromDefault : getDateFromString()}
             />
+            <span>
+                До:
+            </span>
             <input
                 type="date"
                 className={commonStyle.selector}
