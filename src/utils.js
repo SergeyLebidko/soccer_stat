@@ -31,8 +31,8 @@ export async function loadTeams(competitionId, season) {
     return {teams};
 }
 
-export async function loadCompetitionCalendar(competitionId, season) {
-    let url = U.getCompetitionCalendarUrl(competitionId, season);
+export async function loadCompetitionCalendar(competitionId, season, dateFrom, dateTo) {
+    let url = U.getCompetitionCalendarUrl(competitionId, season, dateFrom, dateTo);
     let {matches} = await loadData(url, 'Не удалось загрузить календарь лиги');
     return {matches};
 }

@@ -78,7 +78,7 @@
     align-self: flex-end;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 64em) {
     .filters {
         display: flex;
         flex-direction: row;

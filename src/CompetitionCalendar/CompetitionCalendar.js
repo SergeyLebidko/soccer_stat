@@ -4,6 +4,7 @@ import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import MatchList from '../MatchList/MatchList';
 import ShowCountControl from '../ShowCountControl/ShowCountControl';
 import SeasonSelector from '../SeasonSelector/SeasonSelector';
+import DateSelector from '../DateSelector/DateSelector';
 import {loadCompetition, loadCompetitionCalendar, matchesFilter} from '../utils';
 import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP, CURRENT_SEASON} from '../settings';
 import commonStyle from '../common.module.css';
@@ -17,11 +18,15 @@ function CompetitionCalendar({history, location}) {
     let [error, setError] = useState(null);
     let searchInput = useRef(null);
     let seasonInput = useRef(null);
+    let dateFromInput = useRef(null);
+    let dateToInput = useRef(null);
 
     let params = new URLSearchParams(location.search);
     let competitionId = params.get('competition');
     let search = params.get('search');
     let season = params.get('season');
+    let dateFrom = params.get('dateFrom');
+    let dateTo = params.get('dateTo');
 
     useEffect(() => {
         if (!competitionId) {
@@ -31,7 +36,7 @@ function CompetitionCalendar({history, location}) {
 
         (async function () {
             try {
-                let {matches} = await loadCompetitionCalendar(competitionId, season);
+                let {matches} = await loadCompetitionCalendar(competitionId, season, dateFrom, dateTo);
 
                 // Если нужно - фильтруем список матчей
                 if (search) matches = matchesFilter(matches, search);
@@ -49,8 +54,8 @@ function CompetitionCalendar({history, location}) {
         setCountForShow(countForShow + DEFAULT_SHOW_STEP);
     }
 
-    // Обработчик клика по кнопке поиска
-    let findClickHandler = () => {
+    // Обработчик событий, иницирующих начало поиска
+    let findHandler = () => {
         let params = new URLSearchParams();
         params.append('competition', competitionId);
 
@@ -62,17 +67,18 @@ function CompetitionCalendar({history, location}) {
         let seasonValue = seasonInput.current.value;
         if (seasonValue !== CURRENT_SEASON) params.append('season', seasonValue);
 
+        // Обрабатываем выбор дат
+        let dateFromValue = dateFromInput.current.value;
+        let dateToValue = dateToInput.current.value;
+        if (dateFromValue) params.append('dateFrom', dateFromValue);
+        if (dateToValue) params.append('dateTo', dateToValue);
+
         history.push(`/competition_calendar/?${params.toString()}`);
     }
 
     // Обработчик нажатия на Enter в поле ввода
     let enterHandler = event => {
-        if (event.keyCode === 13) findClickHandler();
-    }
-
-    // Обработчик выбора сезона
-    let seasonChangeHandler = () => {
-        findClickHandler();
+        if (event.keyCode === 13) findHandler();
     }
 
     let content = <Preloader/>;
@@ -82,7 +88,12 @@ function CompetitionCalendar({history, location}) {
             <div className={style.matches_container}>
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
                 <div className={commonStyle.filters}>
-                    <SeasonSelector ref={seasonInput} seasonChangeHandler={seasonChangeHandler}/>
+                    <DateSelector
+                        dateFromRef={dateFromInput}
+                        dateToRef={dateToInput}
+                        dateChangeHandler={findHandler}
+                    />
+                    <SeasonSelector ref={seasonInput} seasonChangeHandler={findHandler}/>
                     <input
                         type="text"
                         className={commonStyle.text_input}
@@ -91,7 +102,7 @@ function CompetitionCalendar({history, location}) {
                         onKeyUp={enterHandler}
                         placeholder="Название команды"
                     />
-                    <img src={find} className={commonStyle.find_button} onClick={findClickHandler}/>
+                    <img src={find} className={commonStyle.find_button} onClick={findHandler}/>
                 </div>
                 <MatchList matches={matchesForShow}/>
                 {matches.length > countForShow ?
