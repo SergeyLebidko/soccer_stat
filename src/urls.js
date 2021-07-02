@@ -1,4 +1,4 @@
-const PROTOCOL = 'http';
+const PROTOCOL = 'https';
 const HOST = 'api.football-data.org';
 const API_VERSION = 'v2';
 
