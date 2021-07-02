@@ -11,7 +11,7 @@ async function loadData(url, errorMessage) {
             }
         });
     } catch (err) {
-        throw new Error(`${errorMessage}. Возможно, превышено лимит количества запросов. Попробуйте обновить страницу позже. (${err.message})`);
+        throw new Error(`${errorMessage}. Возможно, превышен лимит запросов. Попробуйте обновить страницу позже. (${err.message})`);
     }
     if (response.status === 403) throw new Error(`${errorMessage}. Данные не доступны для вашего тарифного плана.`);
     if (response.status === 404) throw new Error(`${errorMessage}. Запрошенные данные отсутствуют на сервере.`);
