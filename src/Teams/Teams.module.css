@@ -6,6 +6,12 @@
     justify-content: flex-start;
 }
 
+.teams_counter {
+    text-align: center;
+    color: gray;
+    margin-top: 0.5em;
+}
+
 .teams_container > * + * {
     margin-top: 1em;
 }
