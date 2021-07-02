@@ -34,7 +34,7 @@ function Competitions({history, location}) {
     }, [location]);
 
     // Обработчик клика по кнопке поиска
-    let findClickHandler = () => {
+    let findHandler = () => {
         let searchValue = searchInput.current.value.trim();
         if (searchValue) {
             let params = new URLSearchParams();
@@ -47,7 +47,7 @@ function Competitions({history, location}) {
 
     // Обработчик нажатия на Enter в поле ввода
     let enterHandler = event => {
-        if (event.keyCode === 13) findClickHandler();
+        if (event.keyCode === 13) findHandler();
     }
 
     let content = <Preloader/>;
@@ -63,7 +63,7 @@ function Competitions({history, location}) {
                         onKeyUp={enterHandler}
                         placeholder="Название лиги"
                     />
-                    <img src={find} className={commonStyle.find_button} onClick={findClickHandler}/>
+                    <img src={find} className={commonStyle.find_button} onClick={findHandler}/>
                 </div>
                 <div className={style.card_container}>
                     {competitions.map(

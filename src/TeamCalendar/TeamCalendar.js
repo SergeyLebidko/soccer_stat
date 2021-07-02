@@ -61,7 +61,7 @@ function TeamCalendar({location, history}) {
     }
 
     // Обработчик клика по кнопке поиска
-    let findClickHandler = () => {
+    let findHandler = () => {
         let params = new URLSearchParams();
         params.append('team', teamId);
 
@@ -73,7 +73,7 @@ function TeamCalendar({location, history}) {
 
     // Обработчик нажатия на Enter в поле ввода
     let enterHandler = event => {
-        if (event.keyCode === 13) findClickHandler();
+        if (event.keyCode === 13) findHandler();
     }
 
     let content = <Preloader/>;
@@ -143,7 +143,7 @@ function TeamCalendar({location, history}) {
                         onKeyUp={enterHandler}
                         placeholder="Название команды"
                     />
-                    <img src={find} className={commonStyle.find_button} onClick={findClickHandler}/>
+                    <img src={find} className={commonStyle.find_button} onClick={findHandler}/>
                 </div>
                 <MatchList matches={matches}/>
                 {matches.length > countForShow ?

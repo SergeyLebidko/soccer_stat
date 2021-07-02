@@ -45,7 +45,7 @@ function Teams({history, location}) {
     }, [location]);
 
     // Обработчик клика по кнопке поиска
-    let findClickHandler = () => {
+    let findHandler = () => {
         let params = new URLSearchParams();
         params.append('competition', competitionId);
 
@@ -62,12 +62,7 @@ function Teams({history, location}) {
 
     // Обработчик нажатия на Enter в поле ввода
     let enterHandler = event => {
-        if (event.keyCode === 13) findClickHandler();
-    }
-
-    // Обработчик выбора сезона
-    let seasonChangeHandler = () => {
-        findClickHandler();
+        if (event.keyCode === 13) findHandler();
     }
 
     let content = <Preloader/>
@@ -80,7 +75,7 @@ function Teams({history, location}) {
             <div className={style.teams_container}>
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
                 <div className={commonStyle.filters}>
-                    <SeasonSelector ref={seasonInput} seasonChangeHandler={seasonChangeHandler}/>
+                    <SeasonSelector ref={seasonInput} seasonChangeHandler={findHandler}/>
                     <input
                         type="text"
                         className={commonStyle.text_input}
@@ -89,7 +84,7 @@ function Teams({history, location}) {
                         onKeyUp={enterHandler}
                         placeholder="Название команды"
                     />
-                    <img src={find} className={commonStyle.find_button} onClick={findClickHandler}/>
+                    <img src={find} className={commonStyle.find_button} onClick={findHandler}/>
                 </div>
                 <ul>
                     {teams.map(
