@@ -73,8 +73,10 @@ function CompetitionCalendar({history, location}) {
         // Обрабатываем выбор дат
         let dateFromValue = dateFromInput.current.value;
         let dateToValue = dateToInput.current.value;
-        params.append('dateFrom', dateFromValue);
-        params.append('dateTo', dateToValue);
+        if (dateToValue && dateFromValue) {
+            params.append('dateFrom', dateFromValue);
+            params.append('dateTo', dateToValue);
+        }
 
         history.push(`/competition_calendar/?${params.toString()}`);
     }
@@ -82,6 +84,12 @@ function CompetitionCalendar({history, location}) {
     // Обработчик нажатия на Enter в поле ввода
     let enterHandler = event => {
         if (event.keyCode === 13) findHandler();
+    }
+
+    let dateChangeHandler = () => {
+        let dateFromValue = dateFromInput.current.value;
+        let dateToValue = dateToInput.current.value;
+        if (dateFromValue && dateToValue) findHandler();
     }
 
     let content = <Preloader/>;
@@ -96,9 +104,9 @@ function CompetitionCalendar({history, location}) {
                         dateToRef={dateToInput}
                         dateFromDefault={dateFrom}
                         dateToDefault={dateTo}
-                        dateChangeHandler={findHandler}
+                        dateChangeHandler={dateChangeHandler}
                     />
-                    <SeasonSelector ref={seasonInput} seasonChangeHandler={findHandler}/>
+                    <SeasonSelector ref={seasonInput} defaultValue={season} seasonChangeHandler={findHandler}/>
                     <input
                         type="text"
                         className={commonStyle.text_input}

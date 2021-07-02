@@ -79,8 +79,10 @@ function TeamCalendar({location, history}) {
         // Обрабатываем выбор дат
         let dateFromValue = dateFromInput.current.value;
         let dateToValue = dateToInput.current.value;
-        if (dateFromValue) params.append('dateFrom', dateFromValue);
-        if (dateToValue) params.append('dateTo', dateToValue);
+        if (dateFromValue && dateToValue) {
+            if (dateFromValue) params.append('dateFrom', dateFromValue);
+            if (dateToValue) params.append('dateTo', dateToValue);
+        }
 
         history.push(`/team_calendar/?${params.toString()}`);
     }
@@ -88,6 +90,12 @@ function TeamCalendar({location, history}) {
     // Обработчик нажатия на Enter в поле ввода
     let enterHandler = event => {
         if (event.keyCode === 13) findHandler();
+    }
+
+    let dateChangeHandler = () => {
+        let dateFromValue = dateFromInput.current.value;
+        let dateToValue = dateToInput.current.value;
+        if (dateFromValue && dateToValue) findHandler();
     }
 
     let content = <Preloader/>;
@@ -155,7 +163,7 @@ function TeamCalendar({location, history}) {
                         dateFromRef={dateFromInput}
                         dateToDefault={dateTo}
                         dateFromDefault={dateFrom}
-                        dateChangeHandler={findHandler}
+                        dateChangeHandler={dateChangeHandler}
                     />
                     <input
                         type="text"

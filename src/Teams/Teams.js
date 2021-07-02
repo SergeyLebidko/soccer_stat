@@ -79,7 +79,7 @@ function Teams({history, location}) {
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
                 {teams.length ? <h6 className={style.teams_counter}>Всего команд: {teams.length}</h6> : ''}
                 <div className={commonStyle.filters}>
-                    <SeasonSelector ref={seasonInput} seasonChangeHandler={findHandler}/>
+                    <SeasonSelector ref={seasonInput} defaultValue={season} seasonChangeHandler={findHandler}/>
                     <input
                         type="text"
                         className={commonStyle.text_input}

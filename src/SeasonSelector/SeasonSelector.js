@@ -21,10 +21,15 @@ function createSeasonsList() {
 }
 
 const SeasonSelector = React.forwardRef((props, ref) => {
-    let {seasonChangeHandler} = props;
+    let {seasonChangeHandler, defaultValue} = props;
     let seasons = createSeasonsList();
     return (
-        <select className={commonStyle.selector} ref={ref} onChange={seasonChangeHandler}>
+        <select
+            className={commonStyle.selector}
+            ref={ref}
+            onChange={seasonChangeHandler}
+            defaultValue={defaultValue || CURRENT_SEASON}
+        >
             {seasons.map(
                 season =>
                     <option key={season.value} value={season.value}>
