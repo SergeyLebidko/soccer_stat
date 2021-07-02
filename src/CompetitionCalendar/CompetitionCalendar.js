@@ -73,10 +73,8 @@ function CompetitionCalendar({history, location}) {
         // Обрабатываем выбор дат
         let dateFromValue = dateFromInput.current.value;
         let dateToValue = dateToInput.current.value;
-        if (dateFromValue && dateToValue) {
-            if (dateFromValue) params.append('dateFrom', dateFromValue);
-            if (dateToValue) params.append('dateTo', dateToValue);
-        }
+        params.append('dateFrom', dateFromValue);
+        params.append('dateTo', dateToValue);
 
         history.push(`/competition_calendar/?${params.toString()}`);
     }

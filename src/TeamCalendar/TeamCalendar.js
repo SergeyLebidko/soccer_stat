@@ -79,10 +79,8 @@ function TeamCalendar({location, history}) {
         // Обрабатываем выбор дат
         let dateFromValue = dateFromInput.current.value;
         let dateToValue = dateToInput.current.value;
-        if (dateToValue && dateToValue) {
-            if (dateFromValue) params.append('dateFrom', dateFromValue);
-            if (dateToValue) params.append('dateTo', dateToValue);
-        }
+        if (dateFromValue) params.append('dateFrom', dateFromValue);
+        if (dateToValue) params.append('dateTo', dateToValue);
 
         history.push(`/team_calendar/?${params.toString()}`);
     }
