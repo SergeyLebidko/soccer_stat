@@ -6,5 +6,8 @@ export const DEFAULT_SHOW_COUNT = 20;
 // Количество элементов списков, дополнительно отображаемых при нажатии на кнопку показа скрытых элементов
 export const DEFAULT_SHOW_STEP = 20;
 
+// Константа для хранения кода текущего сезона
+export const CURRENT_SEASON = 'cs';
+
 // Наиболее ранний сезон, для которого допустмо запрашивать данные
 export const EARLIE_SEASON = 1950

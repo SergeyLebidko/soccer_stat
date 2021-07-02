@@ -3,13 +3,12 @@ import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import MatchList from '../MatchList/MatchList';
 import ShowCountControl from '../ShowCountControl/ShowCountControl';
+import SeasonSelector from '../SeasonSelector/SeasonSelector';
 import {loadCompetition, loadCompetitionCalendar, matchesFilter} from '../utils';
-import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP, EARLIE_SEASON} from '../settings';
+import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP, CURRENT_SEASON} from '../settings';
 import commonStyle from '../common.module.css';
 import style from './CompetitionCalendar.module.css'
 import find from '../images/find.svg';
-
-const CURRENT_SEASON = 'cs';
 
 function CompetitionCalendar({history, location}) {
     let [competition, setCompetition] = useState(null);
@@ -76,21 +75,6 @@ function CompetitionCalendar({history, location}) {
         findClickHandler();
     }
 
-    // Готовим список сезонов
-    let seasonsForSelector = [
-        {
-            value: CURRENT_SEASON,
-            name: 'Текущий сезон'
-        }
-    ];
-    let currentYear = new Date().getFullYear();
-    for (let year = currentYear; year >= EARLIE_SEASON; year--) {
-        seasonsForSelector.push({
-            value: `${year}`,
-            name: `${year}`
-        });
-    }
-
     let content = <Preloader/>;
     if (matches && competition) {
         let matchesForShow = matches.filter((match, index) => index < countForShow);
@@ -98,14 +82,7 @@ function CompetitionCalendar({history, location}) {
             <div className={style.matches_container}>
                 <h1 className={commonStyle.competition_title}>{competition.name}</h1>
                 <div className={style.filters}>
-                    <select className={commonStyle.selector} ref={seasonInput} onChange={seasonChangeHandler}>
-                        {seasonsForSelector.map(
-                            season =>
-                                <option key={season.value} value={season.value}>
-                                    {season.name}
-                                </option>
-                        )}
-                    </select>
+                    <SeasonSelector ref={seasonInput} seasonChangeHandler={seasonChangeHandler}/>
                     <input
                         type="text"
                         className={commonStyle.text_input}
