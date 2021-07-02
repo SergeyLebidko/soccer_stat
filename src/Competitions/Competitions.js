@@ -61,6 +61,7 @@ function Competitions({history, location}) {
                         ref={searchInput}
                         defaultValue={search ? search : ''}
                         onKeyUp={enterHandler}
+                        placeholder="Название лиги"
                     />
                     <img src={find} className={commonStyle.find_button} onClick={findClickHandler}/>
                 </div>

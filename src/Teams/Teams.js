@@ -87,6 +87,7 @@ function Teams({history, location}) {
                         ref={searchInput}
                         defaultValue={search ? search : ''}
                         onKeyUp={enterHandler}
+                        placeholder="Название команды"
                     />
                     <img src={find} className={commonStyle.find_button} onClick={findClickHandler}/>
                 </div>
