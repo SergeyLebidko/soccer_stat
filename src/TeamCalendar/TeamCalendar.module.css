@@ -59,16 +59,6 @@
     color: orangered;
 }
 
-.filters {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.filters > * + * {
-    margin-left: 0.5em;
-}
-
 .squad_block {
     margin: 0.5em;
     display: flex;

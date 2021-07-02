@@ -37,8 +37,8 @@ export async function loadCompetitionCalendar(competitionId, season, dateFrom, d
     return {matches};
 }
 
-export async function loadTeamCalendar(teamId) {
-    let url = U.getTeamCalendarUrl(teamId);
+export async function loadTeamCalendar(teamId, dateFrom, dateTo) {
+    let url = U.getTeamCalendarUrl(teamId, dateFrom, dateTo);
     let {matches} = await loadData(url, 'Не удалось загрузить календарь команды');
     return {matches};
 }

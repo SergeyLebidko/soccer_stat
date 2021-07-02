@@ -3,6 +3,7 @@ import Preloader from '../Preloader/Preloader';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import MatchList from '../MatchList/MatchList';
 import ShowCountControl from '../ShowCountControl/ShowCountControl';
+import DateSelector from '../DateSelector/DateSelector';
 import {withRouter} from 'react-router-dom';
 import {loadTeamCalendar, loadTeam, matchesFilter} from '../utils';
 import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP} from '../settings';
@@ -25,10 +26,14 @@ function TeamCalendar({location, history}) {
     let [error, setError] = useState(null);
     let [showSquad, setShowSquad] = useState(false);
     let searchInput = useRef(null);
+    let dateFromInput = useRef(null);
+    let dateToInput = useRef(null);
 
     let params = new URLSearchParams(location.search);
     let teamId = params.get('team');
     let search = params.get('search');
+    let dateFrom = params.get('dateFrom');
+    let dateTo = params.get('dateTo');
 
     useEffect(() => {
         if (!teamId) {
@@ -38,7 +43,7 @@ function TeamCalendar({location, history}) {
 
         (async function () {
             try {
-                let {matches} = await loadTeamCalendar(teamId);
+                let {matches} = await loadTeamCalendar(teamId, dateFrom, dateTo);
 
                 // Применяем фильтры
                 if (search) matches = matchesFilter(matches, search);
@@ -67,6 +72,12 @@ function TeamCalendar({location, history}) {
 
         let searchValue = searchInput.current.value.trim();
         if (searchValue) params.append('search', searchValue);
+
+        // Обрабатываем выбор дат
+        let dateFromValue = dateFromInput.current.value;
+        let dateToValue = dateToInput.current.value;
+        if (dateFromValue) params.append('dateFrom', dateFromValue);
+        if (dateToValue) params.append('dateTo', dateToValue);
 
         history.push(`/team_calendar/?${params.toString()}`);
     }
@@ -134,7 +145,14 @@ function TeamCalendar({location, history}) {
                         ''
                     }
                 </div>
-                <div className={style.filters}>
+                <div className={commonStyle.filters}>
+                    <DateSelector
+                        dateToRef={dateToInput}
+                        dateFromRef={dateFromInput}
+                        dateToDefault={dateTo}
+                        dateFromDefault={dateFrom}
+                        dateChangeHandler={findHandler}
+                    />
                     <input
                         type="text"
                         className={commonStyle.text_input}

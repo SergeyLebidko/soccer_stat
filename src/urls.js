@@ -32,8 +32,15 @@ export function getCompetitionCalendarUrl(competitionId, season, dateFrom, dateT
     return url;
 }
 
-export function getTeamCalendarUrl(teamId) {
-    return `${BASE}/teams/${teamId}/matches`;
+export function getTeamCalendarUrl(teamId, dateFrom, dateTo) {
+    let url = `${BASE}/teams/${teamId}/matches`;
+    if (dateFrom && dateTo) {
+        let params = new URLSearchParams();
+        params.append('dateFrom', dateFrom);
+        params.append('dateTo', dateTo);
+        url += `/?${params.toString()}`;
+    }
+    return url;
 }
 
 export function getCompetitionUrl(competitionId) {
