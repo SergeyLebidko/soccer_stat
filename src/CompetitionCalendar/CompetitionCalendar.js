@@ -29,6 +29,9 @@ function CompetitionCalendar({history, location}) {
     let dateTo = params.get('dateTo');
 
     useEffect(() => {
+        // Сбрасываем ошибки при обновлении данных в адресной строке
+        setError(null);
+
         if (!competitionId) {
             setError('Некорректный URL');
             return;
@@ -70,8 +73,10 @@ function CompetitionCalendar({history, location}) {
         // Обрабатываем выбор дат
         let dateFromValue = dateFromInput.current.value;
         let dateToValue = dateToInput.current.value;
-        if (dateFromValue) params.append('dateFrom', dateFromValue);
-        if (dateToValue) params.append('dateTo', dateToValue);
+        if (dateFromValue && dateToValue) {
+            if (dateFromValue) params.append('dateFrom', dateFromValue);
+            if (dateToValue) params.append('dateTo', dateToValue);
+        }
 
         history.push(`/competition_calendar/?${params.toString()}`);
     }

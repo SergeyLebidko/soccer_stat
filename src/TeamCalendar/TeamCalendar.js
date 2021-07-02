@@ -36,6 +36,9 @@ function TeamCalendar({location, history}) {
     let dateTo = params.get('dateTo');
 
     useEffect(() => {
+        // Сбрасываем ошибки при обновлении данных в адресной строке
+        setError(null);
+
         if (!teamId) {
             setError('Некорректный URL');
             return;
@@ -76,8 +79,10 @@ function TeamCalendar({location, history}) {
         // Обрабатываем выбор дат
         let dateFromValue = dateFromInput.current.value;
         let dateToValue = dateToInput.current.value;
-        if (dateFromValue) params.append('dateFrom', dateFromValue);
-        if (dateToValue) params.append('dateTo', dateToValue);
+        if (dateToValue && dateToValue) {
+            if (dateFromValue) params.append('dateFrom', dateFromValue);
+            if (dateToValue) params.append('dateTo', dateToValue);
+        }
 
         history.push(`/team_calendar/?${params.toString()}`);
     }

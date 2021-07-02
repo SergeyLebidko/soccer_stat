@@ -17,6 +17,9 @@ function Competitions({history, location}) {
 
     // При монтировании компонента сразу же загружаем список лиг
     useEffect(() => {
+        // Сбрасываем ошибки при обновлении данных в адресной строке
+        setError(null);
+
         (async function () {
             try {
                 let {competitions} = await loadCompetitions();

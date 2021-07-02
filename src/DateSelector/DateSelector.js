@@ -28,7 +28,7 @@ function DateSelector({dateFromRef, dateToRef, dateFromDefault, dateToDefault, d
                 className={commonStyle.selector}
                 ref={dateFromRef}
                 onChange={dateChangeHandler}
-                defaultValue={dateFromDefault ? dateFromDefault : getDateFromString()}
+                defaultValue={dateFromDefault ? dateFromDefault : ''}
             />
             <span>
                 До:
@@ -38,7 +38,7 @@ function DateSelector({dateFromRef, dateToRef, dateFromDefault, dateToDefault, d
                 className={commonStyle.selector}
                 ref={dateToRef}
                 onChange={dateChangeHandler}
-                defaultValue={dateToDefault ? dateToDefault : getDateToString()}
+                defaultValue={dateToDefault ? dateToDefault : ''}
             />
         </div>
     );

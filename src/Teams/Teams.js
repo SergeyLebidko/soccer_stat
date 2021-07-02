@@ -23,6 +23,9 @@ function Teams({history, location}) {
     let season = params.get('season');
 
     useEffect(() => {
+        // Сбрасываем ошибки при обновлении данных в адресной строке
+        setError(null);
+
         if (!competitionId) {
             setError('Некорректный URL');
             return;
