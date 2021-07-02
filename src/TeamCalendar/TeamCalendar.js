@@ -89,6 +89,7 @@ function TeamCalendar({location, history}) {
 
     let content = <Preloader/>;
     if (team && matches) {
+        let matchesForShow = matches.filter((match, index) => index < countForShow);
         content = (
             <div className={style.teams_calendar_container}>
                 <h1 className={commonStyle.competition_title}>{team.name}</h1>
@@ -163,7 +164,7 @@ function TeamCalendar({location, history}) {
                     />
                     <img src={find} className={commonStyle.find_button} onClick={findHandler}/>
                 </div>
-                <MatchList matches={matches}/>
+                <MatchList matches={matchesForShow} totalCount={matches.length}/>
                 {matches.length > countForShow ?
                     <ShowCountControl
                         currentCount={countForShow}

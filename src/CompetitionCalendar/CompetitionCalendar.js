@@ -104,7 +104,7 @@ function CompetitionCalendar({history, location}) {
                     />
                     <img src={find} className={commonStyle.find_button} onClick={findHandler}/>
                 </div>
-                <MatchList matches={matchesForShow}/>
+                <MatchList matches={matchesForShow} totalCount={matches.length}/>
                 {matches.length > countForShow ?
                     <ShowCountControl
                         currentCount={countForShow}

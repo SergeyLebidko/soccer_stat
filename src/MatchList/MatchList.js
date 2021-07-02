@@ -45,67 +45,70 @@ function getScoreText(match) {
     return `${awayTeamScore}/${homeTeamScore}`;
 }
 
-function MatchList({matches}) {
+function MatchList({matches, totalCount}) {
     return (
-        <table className={style.match_table}>
-            <tbody>
-            <tr key="header_captions" className={style.row}>
-                <th>
-                    Дата проведения
-                </th>
-                <th>
-                    Статус
-                </th>
-                <th>
-                    Этап
-                </th>
-                <th>
-                    Гости
-                </th>
-                <th>
-                    Хозяева
-                </th>
-                <th>
-                    Исход матча
-                </th>
-            </tr>
-            {matches.map(
-                match =>
-                    <tr key={match.id} className={style.row}>
-                        <td>
-                            {getDateString(match.utcDate)}
-                        </td>
-                        <td>
-                            {STATUS_TRANSLATOR[match.status]}
-                        </td>
-                        <td>
-                            {STAGE_TRANSLATOR[match.stage] || match.stage}
-                        </td>
-                        <td>
-                            {match.awayTeam.id ?
-                                <Link to={`/team_calendar/?team=${match.awayTeam.id}`}>
-                                    {match.awayTeam.name}
-                                </Link>
-                                :
-                                '-'
-                            }
-                        </td>
-                        <td>
-                            {match.homeTeam.id ?
-                                <Link to={`/team_calendar/?team=${match.homeTeam.id}`}>
-                                    {match.homeTeam.name}
-                                </Link>
-                                :
-                                '-'
-                            }
-                        </td>
-                        <td>
-                            {getScoreText(match)}
-                        </td>
-                    </tr>
-            )}
-            </tbody>
-        </table>
+        <div>
+            <table className={style.match_table}>
+                <tbody>
+                <tr key="header_captions" className={style.row}>
+                    <th>
+                        Дата проведения
+                    </th>
+                    <th>
+                        Статус
+                    </th>
+                    <th>
+                        Этап
+                    </th>
+                    <th>
+                        Гости
+                    </th>
+                    <th>
+                        Хозяева
+                    </th>
+                    <th>
+                        Исход матча
+                    </th>
+                </tr>
+                {matches.map(
+                    match =>
+                        <tr key={match.id} className={style.row}>
+                            <td>
+                                {getDateString(match.utcDate)}
+                            </td>
+                            <td>
+                                {STATUS_TRANSLATOR[match.status]}
+                            </td>
+                            <td>
+                                {STAGE_TRANSLATOR[match.stage] || match.stage}
+                            </td>
+                            <td>
+                                {match.awayTeam.id ?
+                                    <Link to={`/team_calendar/?team=${match.awayTeam.id}`}>
+                                        {match.awayTeam.name}
+                                    </Link>
+                                    :
+                                    '-'
+                                }
+                            </td>
+                            <td>
+                                {match.homeTeam.id ?
+                                    <Link to={`/team_calendar/?team=${match.homeTeam.id}`}>
+                                        {match.homeTeam.name}
+                                    </Link>
+                                    :
+                                    '-'
+                                }
+                            </td>
+                            <td>
+                                {getScoreText(match)}
+                            </td>
+                        </tr>
+                )}
+                </tbody>
+            </table>
+            {totalCount > 0 ? <h6 className={style.match_counter}>Всего матчей: {totalCount}</h6> : ''}
+        </div>
     )
 }
 
