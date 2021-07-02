@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/soccer_stat/static/css/main.ad6d181c.chunk.css",
-    "main.js": "/soccer_stat/static/js/main.8e16a898.chunk.js",
-    "main.js.map": "/soccer_stat/static/js/main.8e16a898.chunk.js.map",
+    "main.css": "/soccer_stat/static/css/main.a94487fd.chunk.css",
+    "main.js": "/soccer_stat/static/js/main.a3813055.chunk.js",
+    "main.js.map": "/soccer_stat/static/js/main.a3813055.chunk.js.map",
     "runtime-main.js": "/soccer_stat/static/js/runtime-main.9fed8bef.js",
     "runtime-main.js.map": "/soccer_stat/static/js/runtime-main.9fed8bef.js.map",
     "static/js/2.4321fae3.chunk.js": "/soccer_stat/static/js/2.4321fae3.chunk.js",
     "static/js/2.4321fae3.chunk.js.map": "/soccer_stat/static/js/2.4321fae3.chunk.js.map",
     "index.html": "/soccer_stat/index.html",
-    "static/css/main.ad6d181c.chunk.css.map": "/soccer_stat/static/css/main.ad6d181c.chunk.css.map",
+    "static/css/main.a94487fd.chunk.css.map": "/soccer_stat/static/css/main.a94487fd.chunk.css.map",
     "static/js/2.4321fae3.chunk.js.LICENSE.txt": "/soccer_stat/static/js/2.4321fae3.chunk.js.LICENSE.txt",
     "static/media/find.99a40acd.svg": "/soccer_stat/static/media/find.99a40acd.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.9fed8bef.js",
     "static/js/2.4321fae3.chunk.js",
-    "static/css/main.ad6d181c.chunk.css",
-    "static/js/main.8e16a898.chunk.js"
+    "static/css/main.a94487fd.chunk.css",
+    "static/js/main.a3813055.chunk.js"
   ]
 }
