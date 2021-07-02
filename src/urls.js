@@ -23,7 +23,7 @@ export function getCompetitionCalendarUrl(competitionId, season, dateFrom, dateT
     if (season || (dateFrom && dateTo)) {
         let params = new URLSearchParams();
         if (season) params.append('season', season);
-        if (dateFrom && dateTo) {
+        if (dateFrom || dateTo) {
             params.append('dateFrom', dateFrom);
             params.append('dateTo', dateTo);
         }
@@ -34,7 +34,7 @@ export function getCompetitionCalendarUrl(competitionId, season, dateFrom, dateT
 
 export function getTeamCalendarUrl(teamId, dateFrom, dateTo) {
     let url = `${BASE}/teams/${teamId}/matches`;
-    if (dateFrom && dateTo) {
+    if (dateFrom || dateTo) {
         let params = new URLSearchParams();
         params.append('dateFrom', dateFrom);
         params.append('dateTo', dateTo);
