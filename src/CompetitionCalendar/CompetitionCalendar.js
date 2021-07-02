@@ -94,6 +94,8 @@ function CompetitionCalendar({history, location}) {
                     <DateSelector
                         dateFromRef={dateFromInput}
                         dateToRef={dateToInput}
+                        dateFromDefault={dateFrom}
+                        dateToDefault={dateTo}
                         dateChangeHandler={findHandler}
                     />
                     <SeasonSelector ref={seasonInput} seasonChangeHandler={findHandler}/>

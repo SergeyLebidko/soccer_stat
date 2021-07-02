@@ -2,7 +2,7 @@ import React from 'react';
 import style from './DateSelector.module.css';
 import commonStyle from '../common.module.css';
 
-function DateSelector({dateFromRef, dateToRef, dateChangeHandler}) {
+function DateSelector({dateFromRef, dateToRef, dateFromDefault, dateToDefault, dateChangeHandler}) {
     return (
         <div className={style.date_container}>
             <span>
@@ -13,6 +13,7 @@ function DateSelector({dateFromRef, dateToRef, dateChangeHandler}) {
                 className={commonStyle.selector}
                 ref={dateFromRef}
                 onChange={dateChangeHandler}
+                defaultValue={dateFromDefault ? dateFromDefault : ''}
             />
             <span>
                 До:
@@ -22,6 +23,7 @@ function DateSelector({dateFromRef, dateToRef, dateChangeHandler}) {
                 className={commonStyle.selector}
                 ref={dateToRef}
                 onChange={dateChangeHandler}
+                defaultValue={dateToDefault ? dateToDefault : ''}
             />
         </div>
     );
