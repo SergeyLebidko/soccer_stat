@@ -108,7 +108,9 @@ export function matchesDateFilter(matches, dateFrom, dateTo) {
         fromFlag = true;
         toFlag = true;
         if (dateFrom) fromFlag = Date.parse(dateFrom) <= Date.parse(match.utcDate);
-        if (dateTo) toFlag = Date.parse(dateTo) >= Date.parse(match.utcDate);
+
+        // При фильтрации по дате "до" добавляем слагаемое, чтобы сутки день dateTo также попадал в диапазон допустимых значений
+        if (dateTo) toFlag = (Date.parse(dateTo) + 86399999) >= Date.parse(match.utcDate);
         return fromFlag && toFlag;
     });
 }
