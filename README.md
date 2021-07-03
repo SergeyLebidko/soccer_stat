@@ -54,7 +54,7 @@ fetch-api.
 Здесь пользователь видит список ведущих европейских футбольных лиг и чемпионатов. Кстати, то, что сейчас как раз 
 проводится чемпионат Европы по футболу очень помогло в тестировании :)
 
-![screenshot](screenshots/screen1.png)
+![screenshot](https://github.com/SergeyLebidko/soccer_stat_screenshots/blob/main/screen1.png)
 
 Я добавил на страницу поле для ввода текста для отбора по наименованию лиги/соревнования. Поле для отбора по году я не
 стал добавлять намеренно. Не потому, что это трудно реализовать и я не смог это сделать, а из-за ограничений, накладываемых
@@ -71,9 +71,9 @@ fetch-api.
 
 #### Календарь матчей лиги
 
-![screenshot](screenshots/screen2.png)
+![screenshot](https://github.com/SergeyLebidko/soccer_stat_screenshots/blob/main/screen2.png)
 
-![screenshot](screenshots/screen3.png)
+![screenshot](https://github.com/SergeyLebidko/soccer_stat_screenshots/blob/main/screen3.png)
 
 Я реализовал фильтры по сезону, наименованию команды и дате ("от" и "до"). Также добавил отображение списка матчей не 
 всего сразу, а постранично, так что пользователь может видеть дополнительные матчи просто кликая по кнопке "Показать еще".
@@ -89,15 +89,15 @@ fetch-api.
 
 Если кликнуть на название команды, то откроется её календарь. Также можно в отдельной области посмотреть состав команды.
 
-![screenshot](screenshots/screen4.png)
+![screenshot](https://github.com/SergeyLebidko/soccer_stat_screenshots/blob/main/screen4.png)
 
-![screenshot](screenshots/screen5.png)
+![screenshot](shttps://github.com/SergeyLebidko/soccer_stat_screenshots/blob/main/screen5.png)
 
 #### Список команд лиги
 
 Список команд лиги открывается при клике на ссылку "Команды" в списке лиг.
 
-![screenshot](screenshots/screen6.png)
+![screenshot](https://github.com/SergeyLebidko/soccer_stat_screenshots/blob/main/screen6.png)
 
 #### Организация кода 
 
