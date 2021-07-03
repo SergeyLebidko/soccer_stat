@@ -5,7 +5,7 @@ import MatchList from '../MatchList/MatchList';
 import ShowCountControl from '../ShowCountControl/ShowCountControl';
 import DateSelector from '../DateSelector/DateSelector';
 import {withRouter} from 'react-router-dom';
-import {loadTeamCalendar, loadTeam, matchesFilter} from '../utils';
+import {loadTeamCalendar, loadTeam, matchesSearchFilter, matchesDateFilter} from '../utils';
 import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP} from '../settings';
 import style from './TeamCalendar.module.css';
 import commonStyle from '../common.module.css';
@@ -46,10 +46,11 @@ function TeamCalendar({location, history}) {
 
         (async function () {
             try {
-                let {matches} = await loadTeamCalendar(teamId, dateFrom, dateTo);
+                let {matches} = await loadTeamCalendar(teamId);
 
                 // Применяем фильтры
-                if (search) matches = matchesFilter(matches, search);
+                if (search) matches = matchesSearchFilter(matches, search);
+                if (dateFrom || dateTo) matches = matchesDateFilter(matches, dateFrom, dateTo)
 
                 let team = await loadTeam(teamId);
                 setMatches(matches);
@@ -79,10 +80,8 @@ function TeamCalendar({location, history}) {
         // Обрабатываем выбор дат
         let dateFromValue = dateFromInput.current.value;
         let dateToValue = dateToInput.current.value;
-        if (dateFromValue && dateToValue) {
-            if (dateFromValue) params.append('dateFrom', dateFromValue);
-            if (dateToValue) params.append('dateTo', dateToValue);
-        }
+        if (dateFromValue) params.append('dateFrom', dateFromValue);
+        if (dateToValue) params.append('dateTo', dateToValue);
 
         history.push(`/team_calendar/?${params.toString()}`);
     }
@@ -90,12 +89,6 @@ function TeamCalendar({location, history}) {
     // Обработчик нажатия на Enter в поле ввода
     let enterHandler = event => {
         if (event.keyCode === 13) findHandler();
-    }
-
-    let dateChangeHandler = () => {
-        let dateFromValue = dateFromInput.current.value;
-        let dateToValue = dateToInput.current.value;
-        if (dateFromValue && dateToValue) findHandler();
     }
 
     let content = <Preloader/>;
@@ -163,7 +156,7 @@ function TeamCalendar({location, history}) {
                         dateFromRef={dateFromInput}
                         dateToDefault={dateTo}
                         dateFromDefault={dateFrom}
-                        dateChangeHandler={dateChangeHandler}
+                        dateChangeHandler={findHandler}
                     />
                     <input
                         type="text"

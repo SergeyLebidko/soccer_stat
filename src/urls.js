@@ -20,25 +20,16 @@ export function getTeamsUrl(competitionId, season) {
 
 export function getCompetitionCalendarUrl(competitionId, season, dateFrom, dateTo) {
     let url = `${BASE}/competitions/${competitionId}/matches`;
-    if (season || dateFrom || dateTo) {
+    if (season) {
         let params = new URLSearchParams();
-        if (season) params.append('season', season);
-        params.append('dateFrom', dateFrom || '');
-        params.append('dateTo', dateTo || '');
+        params.append('season', season);
         url += `/?${params.toString()}`;
     }
     return url;
 }
 
-export function getTeamCalendarUrl(teamId, dateFrom, dateTo) {
-    let url = `${BASE}/teams/${teamId}/matches`;
-    if (dateFrom || dateTo) {
-        let params = new URLSearchParams();
-        params.append('dateFrom', dateFrom || '');
-        params.append('dateTo', dateTo || '');
-        url += `/?${params.toString()}`;
-    }
-    return url;
+export function getTeamCalendarUrl(teamId) {
+    return `${BASE}/teams/${teamId}/matches`;
 }
 
 export function getCompetitionUrl(competitionId) {

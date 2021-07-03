@@ -47,14 +47,14 @@ export async function loadTeams(competitionId, season) {
     return {teams};
 }
 
-export async function loadCompetitionCalendar(competitionId, season, dateFrom, dateTo) {
-    let url = U.getCompetitionCalendarUrl(competitionId, season, dateFrom, dateTo);
+export async function loadCompetitionCalendar(competitionId, season) {
+    let url = U.getCompetitionCalendarUrl(competitionId, season);
     let {matches} = await loadData(url, 'Не удалось загрузить календарь лиги');
     return {matches};
 }
 
-export async function loadTeamCalendar(teamId, dateFrom, dateTo) {
-    let url = U.getTeamCalendarUrl(teamId, dateFrom, dateTo);
+export async function loadTeamCalendar(teamId) {
+    let url = U.getTeamCalendarUrl(teamId);
     let {matches} = await loadData(url, 'Не удалось загрузить календарь команды');
     return {matches};
 }
@@ -90,13 +90,25 @@ export function getDateString(rawData) {
     return `${date.getDate()} ${MONTH_LIST[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-// Функция для фильтрации списка матчей
-export function matchesFilter(matches, search) {
+// Функция для фильтрации списка матчей по строке поиска
+export function matchesSearchFilter(matches, search) {
     return matches.filter(match => {
         let f1, f2;
         f1 = f2 = false;
         if (match.homeTeam.id) f1 = match.homeTeam.name.toLowerCase().includes(search.toLowerCase());
         if (match.awayTeam.id) f2 = match.awayTeam.name.toLowerCase().includes(search.toLowerCase());
         return f1 || f2;
+    });
+}
+
+// Функция для фильтрации списка матчей по датам "от" и "до"
+export function matchesDateFilter(matches, dateFrom, dateTo) {
+    let fromFlag, toFlag;
+    return matches.filter(match => {
+        fromFlag = true;
+        toFlag = true;
+        if (dateFrom) fromFlag = Date.parse(dateFrom) <= Date.parse(match.utcDate);
+        if (dateTo) toFlag = Date.parse(dateTo) >= Date.parse(match.utcDate);
+        return fromFlag && toFlag;
     });
 }

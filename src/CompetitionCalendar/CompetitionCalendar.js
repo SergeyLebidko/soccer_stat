@@ -5,7 +5,7 @@ import MatchList from '../MatchList/MatchList';
 import ShowCountControl from '../ShowCountControl/ShowCountControl';
 import SeasonSelector from '../SeasonSelector/SeasonSelector';
 import DateSelector from '../DateSelector/DateSelector';
-import {loadCompetition, loadCompetitionCalendar, matchesFilter} from '../utils';
+import {loadCompetition, loadCompetitionCalendar, matchesSearchFilter, matchesDateFilter} from '../utils';
 import {DEFAULT_SHOW_COUNT, DEFAULT_SHOW_STEP, CURRENT_SEASON} from '../settings';
 import commonStyle from '../common.module.css';
 import style from './CompetitionCalendar.module.css'
@@ -39,10 +39,11 @@ function CompetitionCalendar({history, location}) {
 
         (async function () {
             try {
-                let {matches} = await loadCompetitionCalendar(competitionId, season, dateFrom, dateTo);
+                let {matches} = await loadCompetitionCalendar(competitionId, season);
 
                 // Если нужно - фильтруем список матчей
-                if (search) matches = matchesFilter(matches, search);
+                if (search) matches = matchesSearchFilter(matches, search);
+                if (dateFrom || dateTo) matches = matchesDateFilter(matches, dateFrom, dateTo);
 
                 let competition = await loadCompetition(competitionId);
                 setMatches(matches);
@@ -73,10 +74,8 @@ function CompetitionCalendar({history, location}) {
         // Обрабатываем выбор дат
         let dateFromValue = dateFromInput.current.value;
         let dateToValue = dateToInput.current.value;
-        if (dateToValue && dateFromValue) {
-            params.append('dateFrom', dateFromValue);
-            params.append('dateTo', dateToValue);
-        }
+        if (dateFromValue) params.append('dateFrom', dateFromValue);
+        if (dateToValue) params.append('dateTo', dateToValue);
 
         history.push(`/competition_calendar/?${params.toString()}`);
     }
@@ -84,12 +83,6 @@ function CompetitionCalendar({history, location}) {
     // Обработчик нажатия на Enter в поле ввода
     let enterHandler = event => {
         if (event.keyCode === 13) findHandler();
-    }
-
-    let dateChangeHandler = () => {
-        let dateFromValue = dateFromInput.current.value;
-        let dateToValue = dateToInput.current.value;
-        if (dateFromValue && dateToValue) findHandler();
     }
 
     let content = <Preloader/>;
@@ -104,7 +97,7 @@ function CompetitionCalendar({history, location}) {
                         dateToRef={dateToInput}
                         dateFromDefault={dateFrom}
                         dateToDefault={dateTo}
-                        dateChangeHandler={dateChangeHandler}
+                        dateChangeHandler={findHandler}
                     />
                     <SeasonSelector ref={seasonInput} defaultValue={season} seasonChangeHandler={findHandler}/>
                     <input
