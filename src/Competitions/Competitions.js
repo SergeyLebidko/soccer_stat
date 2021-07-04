@@ -66,7 +66,7 @@ function Competitions({history, location}) {
                         onKeyUp={enterHandler}
                         placeholder="Название лиги"
                     />
-                    <img src={find} className={commonStyle.find_button} onClick={findHandler}/>
+                    <img src={find} className={commonStyle.find_button} alt="Найти" onClick={findHandler}/>
                 </div>
                 <div className={style.card_container}>
                     {competitions.map(
@@ -76,6 +76,7 @@ function Competitions({history, location}) {
                                     <img
                                         src={competition.emblemUrl || competition.area.ensignUrl}
                                         className={style.emblem}
+                                        alt={`Эмблема ${competition.name}`}
                                     />
                                 </Link>
                                 <h1 className={style.competition_title}>

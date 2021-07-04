@@ -166,7 +166,7 @@ function TeamCalendar({location, history}) {
                         onKeyUp={enterHandler}
                         placeholder="Название команды"
                     />
-                    <img src={find} className={commonStyle.find_button} onClick={findHandler}/>
+                    <img src={find} className={commonStyle.find_button} alt="Найти" onClick={findHandler}/>
                 </div>
                 <MatchList matches={matchesForShow} totalCount={matches.length}/>
                 {matches.length > countForShow ?
