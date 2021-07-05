@@ -91,7 +91,7 @@ fetch-api.
 
 ![screenshot](https://github.com/SergeyLebidko/soccer_stat_screenshots/blob/main/screen4.png)
 
-![screenshot](shttps://github.com/SergeyLebidko/soccer_stat_screenshots/blob/main/screen5.png)
+![screenshot](https://github.com/SergeyLebidko/soccer_stat_screenshots/blob/main/screen5.png)
 
 #### Список команд лиги
 
